@@ -1,5 +1,14 @@
 package com.InstallBuilder.windows;
 
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Desktop;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -43,6 +52,18 @@ public class AboutWindow {
 		
 		lblApName = new JLabel("Install Builder Universal");
 		lblApName.setBounds(77, 10, 300, 15);
+		lblApName.setForeground(Color.BLUE);
+		lblApName.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				try {
+					Desktop.getDesktop().browse(new URI("https://github.com/JudgeGlass/Install_Builder_Universal"));
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} 
+			}
+		});
+		lblApName.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		frame.getContentPane().add(lblApName);
 		
 		lblAuthor = new JLabel("Author: Hunter Wilcox");
@@ -64,7 +85,7 @@ public class AboutWindow {
 		txtPane = new JTextPane();
 		txtPane.setEditable(false);
 		txtPane.setBounds(5, 130, 280, 110);
-		txtPane.setText("This is a program that makes a install wizard\nfor your application. It should work Linux, Window,\nand MaOS.");
+		txtPane.setText("This is a program that makes a install wizard\nfor your application. It should work Linux, Window,\nand MacOS.");
 		frame.getContentPane().add(txtPane);
 	}
 }

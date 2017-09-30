@@ -274,7 +274,7 @@ public class InstallBuilderWindow {
 				Utils.writeFile("Conf.txt", content);
 				
 				Utils.copyFile(new File("Conf.txt"), new File(apName.getText() + "/Conf.txt"));
-				Utils.copyFile(new File("SETUP.exe"), new File(apName.getText() + "/SETUP.exe"));
+				Utils.copyFile(new File("Cf32.dat"), new File(apName.getText() + "/SETUP.jar"));
 				btnMake.setEnabled(true);
 				content = "";
 				System.out.println(content);
