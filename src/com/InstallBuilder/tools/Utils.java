@@ -32,13 +32,10 @@ public class Utils {
 	
 	public String getLicenseFile() {
 		String cont = "";
+		InputStream input = getClass().getResourceAsStream("/com/InstallBuilder/resources/LICENSE.txt");
 		try {
-			cont = new String(Files.readAllBytes(Paths.get(getClass().getResource("/com/InstallBuilder/resources/LICENSE.txt").toURI())));
+			cont = IOUtils.toString(input, "UTF-8");
 		} catch (IOException e) {
-			JOptionPane.showMessageDialog(null, "Error:\n" + e);
-			e.printStackTrace();
-		} catch (URISyntaxException e) {
-			JOptionPane.showMessageDialog(null, "Error:\n" + e);
 			e.printStackTrace();
 		}
 		return cont;
