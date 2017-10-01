@@ -10,7 +10,7 @@ public class OpenDirectory {
 	public void open(final JPanel panel) {
 		JFileChooser chooser = new JFileChooser();
 	    chooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
-	    chooser.setDialogTitle("choosertitle");
+	    chooser.setDialogTitle("Choose Directory");
 	    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 	    chooser.setAcceptAllFileFilterUsed(false);
 

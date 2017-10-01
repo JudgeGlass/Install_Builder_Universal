@@ -1,13 +1,18 @@
-application-name=Test
-application-details=Just test
+application-name=TheFinalFinalTest
+application-details=The final final test down
 default-install-dir=C:\Program Files
-license-path=NONE
-install-folder-name=Text
+license-path=LICENSE_002.txt
+install-folder-name=NotePad
 ## FILES ##
+lwjgl-assimp.jar
+lwjgl-glfw-natives-windows.jar
 glew32.dll
+main.cpp
 ## FILES END ##
 
 ## DIRS ##
-NotePadCPP
+Install_Builder_Universal_v0.0.1
+Installer Builder
+ModMaker
 ## DIRS END ##
-main-executable=
+main-executable=main.cpp

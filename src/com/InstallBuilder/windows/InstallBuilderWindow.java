@@ -3,6 +3,7 @@ package com.InstallBuilder.windows;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -12,11 +13,11 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import com.InstallBuilder.listeners.MenuActionListener;
 import com.InstallBuilder.tools.ManageDirs;
@@ -64,6 +65,9 @@ public class InstallBuilderWindow {
 	private JButton btnMainExeBrowse;
 	private JButton btnLicenseBrowse;
 	private JButton btnMake;
+	private JButton btnApplication;
+	
+	private JProgressBar bar;
 	
 	public static String content = "";
 	
@@ -81,7 +85,6 @@ public class InstallBuilderWindow {
 		frame.add(panel);
 		
 		initialize();
-		
 	}
 	
 	/** Adds The Components*/
@@ -171,7 +174,7 @@ public class InstallBuilderWindow {
 		lblApDec.setBounds(160, 390, 200, 15);
 		frame.getContentPane().add(lblApDec);
 		
-		lblInstallFolderName = new JLabel("Install Foler Name:");
+		lblInstallFolderName = new JLabel("Install Folder Name:");
 		lblInstallFolderName.setBounds(315, 390, 300, 15);
 		frame.getContentPane().add(lblInstallFolderName);
 		
@@ -180,6 +183,18 @@ public class InstallBuilderWindow {
 		btnMake.setActionCommand("MAKE");
 		btnMake.addActionListener(new BtnListener());
 		frame.getContentPane().add(btnMake);
+		
+		btnApplication = new JButton("Apps.");
+		btnApplication.setBounds(718, 380, 75, 20);
+		btnApplication.setActionCommand("APPLICATTIONS");
+		btnApplication.addActionListener(new BtnListener());
+		frame.getContentPane().add(btnApplication);
+		
+		bar = new JProgressBar();
+		bar.setIndeterminate(true);
+		bar.setBounds(475, 405, 240, 15);
+		bar.hide();
+		frame.getContentPane().add(bar);
 	}
 	
 	/** Make The Menu Bar*/
@@ -260,7 +275,23 @@ public class InstallBuilderWindow {
 				if(opf.getFile().isEmpty()) return;
 				mainExe.setText(opf.getFile());
 			}else if(cmd.equals("MAKE")) {
-				btnMake.setEnabled(false);
+				bar.show();
+				enableButtons(false);
+				make();
+			}else if(cmd.equals("APPLICATTIONS")) {
+				try {
+					Process p = Runtime.getRuntime().exec("explorer " + System.getProperty("user.dir"));
+				} catch (IOException e1) {
+					JOptionPane.showMessageDialog(null, "Error:\n" + e1);
+					e1.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	private void make() {
+		new Thread(new Runnable() {
+			public void run() {
 				File fi = new File(apName.getText());
 				fi.mkdir();
 				
@@ -273,26 +304,42 @@ public class InstallBuilderWindow {
 				content += "main-executable=" + mainExe.getText();
 				Utils.writeFile("Conf.txt", content);
 				
+				if(!System.getProperty("os.name").equals("Linux"))
+					Utils.copyFile(new File(license.getText()), new File(apName.getText() + "/" + Utils.indexOf(license.getText(), '\\')));
+				else
+					Utils.copyFile(new File(license.getText()), new File(apName.getText() + "/" + Utils.indexOf(license.getText(), '/')));
 				Utils.copyFile(new File("Conf.txt"), new File(apName.getText() + "/Conf.txt"));
 				Utils.copyFile(new File("Cf32.dat"), new File(apName.getText() + "/SETUP.jar"));
-				btnMake.setEnabled(true);
+				bar.hide();
+				enableButtons(true);
 				content = "";
 				System.out.println(content);
+				JOptionPane.showMessageDialog(null, "Setup is completed!", "Done", JOptionPane.INFORMATION_MESSAGE);
 			}
-		}
+		}).start();
 	}
 	
-	Runnable updateThread = new Runnable() {
-		public void run() {
-			ProgressWindow p = new ProgressWindow();
-		}
-	};
+	private void enableButtons(final boolean enable) {
+		btnFileDelete.setEnabled(enable);
+		btnDirDelete.setEnabled(enable);
+		btnFileBrowse.setEnabled(enable);
+		btnDirBrowse.setEnabled(enable);
+		btnMainExeBrowse.setEnabled(enable);
+		btnLicenseBrowse.setEnabled(enable);
+		btnMake.setEnabled(enable);
+		
+	}
 	
 	private String makeConf(String conf) {
 		conf += "application-name=" + apName.getText() + "\n";
 		conf += "application-details=" + apDec.getText() + "\n";
 		conf += "default-install-dir=C:\\Program Files\n";
-		conf += "license-path=" + license.getText() + "\n";
+		
+		if(!System.getProperty("os.name").equals("Linux"))
+			conf += "license-path=" + Utils.indexOf(license.getText(), '\\') + "\n";
+		else
+			conf += "license-path=" + Utils.indexOf(license.getText(), '/') + "\n";
+		
 		conf += "install-folder-name=" + installFolderName.getText() + "\n";
 		conf += "## FILES ##" + "\n";
 		return conf;

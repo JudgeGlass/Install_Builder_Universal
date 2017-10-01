@@ -6,12 +6,13 @@ import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 
 public class OpenFile {
-	private final JFileChooser fc = new JFileChooser();
 	private String files = "";
 	
 	public void open(final JPanel panel) {
+		JFileChooser fc = new JFileChooser();
 		int returnVal = fc.showOpenDialog(panel);
-
+		fc.setCurrentDirectory(new File(System.getProperty("user.dir")));
+		fc.setDialogTitle("Choose File(s)");
         if (returnVal == JFileChooser.APPROVE_OPTION) {
             File file = fc.getSelectedFile();
             
