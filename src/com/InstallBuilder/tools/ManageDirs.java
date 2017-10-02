@@ -14,6 +14,7 @@ public class ManageDirs {
 	public void copyDir(final DefaultListModel dirModel, final JTextField txt) {
 		if(dirModel.size() != 0) {
 			for(int i = 0;i<dirModel.size(); i++) {
+				System.out.println("COPYING: <DIR> " + dirModel.getElementAt(i));
 				File f = new File(dirModel.getElementAt(i).toString());
 				try {
 					if(!System.getProperty("os.name").equals("Linux"))
@@ -30,7 +31,6 @@ public class ManageDirs {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-				System.out.println("COPYING: " + dirModel.getElementAt(i));
 			}
 			InstallBuilderWindow.content += "## DIRS END ##\n";
 		}else {

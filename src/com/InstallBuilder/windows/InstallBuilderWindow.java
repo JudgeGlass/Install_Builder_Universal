@@ -3,7 +3,12 @@ package com.InstallBuilder.windows;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -24,6 +29,7 @@ import com.InstallBuilder.tools.ManageDirs;
 import com.InstallBuilder.tools.ManageFiles;
 import com.InstallBuilder.tools.OpenDirectory;
 import com.InstallBuilder.tools.OpenFile;
+import com.InstallBuilder.tools.SaveFile;
 import com.InstallBuilder.tools.Utils;
 
 public class InstallBuilderWindow {
@@ -209,7 +215,6 @@ public class InstallBuilderWindow {
 		JMenuItem exitFile = new JMenuItem("Exit");
 		exitFile.setActionCommand("EXIT");
 		exitFile.addActionListener(new MenuActionListener());
-		fileMenu.add(exitFile);
 		
 		helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);
@@ -218,6 +223,24 @@ public class InstallBuilderWindow {
 		aboutHelp.setActionCommand("ABOUT");
 		aboutHelp.addActionListener(new MenuActionListener());
 		helpMenu.add(aboutHelp);
+		
+		JMenuItem saveConf = new JMenuItem("Save Configuration");
+		saveConf.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				saveConfiguration();
+			}
+		});
+		
+		JMenuItem openConf = new JMenuItem("OpenConfiguration");
+		openConf.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				openConfiguration();
+			}
+		});
+		
+		fileMenu.add(openConf);
+		fileMenu.add(saveConf);
+		fileMenu.add(exitFile);
 	}
 	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -275,6 +298,24 @@ public class InstallBuilderWindow {
 				if(opf.getFile().isEmpty()) return;
 				mainExe.setText(opf.getFile());
 			}else if(cmd.equals("MAKE")) {
+				if(fileModel.size() == 0) {
+					JOptionPane.showMessageDialog(null, "You need at least one file to continue", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
+				if(apName.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "\"Application Name\" must be filled", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}else if(license.getText().isEmpty()){
+					JOptionPane.showMessageDialog(null, "\"License\" must be filled", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}else if(installFolderName.getText().isEmpty()){
+					JOptionPane.showMessageDialog(null, "\"Install Folder Name\" must be filled", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}else if(apDec.getText().isEmpty()){
+					apDec.setText("Description not given");
+				}
+				
 				bar.show();
 				enableButtons(false);
 				make();
@@ -282,7 +323,7 @@ public class InstallBuilderWindow {
 				try {
 					Process p = Runtime.getRuntime().exec("explorer " + System.getProperty("user.dir"));
 				} catch (IOException e1) {
-					JOptionPane.showMessageDialog(null, "Error:\n" + e1);
+					JOptionPane.showMessageDialog(null, "Error:\n" + e1, "Error", JOptionPane.ERROR_MESSAGE);
 					e1.printStackTrace();
 				}
 			}
@@ -343,5 +384,71 @@ public class InstallBuilderWindow {
 		conf += "install-folder-name=" + installFolderName.getText() + "\n";
 		conf += "## FILES ##" + "\n";
 		return conf;
+	}
+	
+	private void saveConfiguration() {
+		List<String> lines = new ArrayList<String>();
+		lines.add(mainExe.getText());
+		lines.add(license.getText());
+		lines.add(apName.getText());
+		lines.add(apDec.getText());
+		lines.add(installFolderName.getText());
+		lines.add("## FILES ##");
+		
+		for(int i = 0; i < fileModel.getSize(); i++) {
+			lines.add(fileModel.getElementAt(i).toString());
+		}
+		lines.add("## FILES END ##");
+		lines.add("## DIRS ##");
+		if(dirModel.size() != 0) {
+			for(int i = 0; i < dirModel.getSize(); i++) {
+				lines.add(dirModel.getElementAt(i).toString());
+			}
+			lines.add("## DIRS END ##");
+		}else {
+			lines.add("\n## DIRS END ##");
+		}
+		
+		
+		SaveFile saveFile = new SaveFile();
+		saveFile.save(panel);
+		String dir = saveFile.getDir();
+		try {
+			PrintWriter writer = new PrintWriter(new File(dir + "/SaveInstallBuilder.dat"), "UTF-8");
+			String linesToString = "";
+			for(int i = 0; i<lines.size(); i++) {
+				linesToString += lines.get(i) + "\n";
+			}
+			writer.write(linesToString);
+			writer.close();
+		} catch (FileNotFoundException | UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private void openConfiguration() {
+		OpenFile opf = new OpenFile();
+		opf.open(panel);
+		
+		String fileName = opf.getFile();
+		mainExe.setText(Utils.readLine(fileName, 0));
+		license.setText(Utils.readLine(fileName, 1));
+		apName.setText(Utils.readLine(fileName, 2));
+		apDec.setText(Utils.readLine(fileName, 3));
+		installFolderName.setText(Utils.readLine(fileName, 4));
+		
+		int fileStartPoint = 6;
+		while(!Utils.readLine(fileName, fileStartPoint).equals("## FILES END ##")) {
+			fileModel.addElement(Utils.readLine(fileName, fileStartPoint));
+			fileStartPoint++;
+		}
+		
+		int dirStartPoint = fileStartPoint + 2;
+		while(!Utils.readLine(fileName, dirStartPoint).equals("## DIRS END ##")) {
+			if(Utils.readLine(fileName, dirStartPoint).isEmpty()) break;
+			dirModel.addElement(Utils.readLine(fileName, dirStartPoint));
+			dirStartPoint++;
+		}
 	}
 }

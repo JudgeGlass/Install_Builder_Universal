@@ -14,6 +14,7 @@ import com.InstallBuilder.windows.InstallBuilderWindow;
 public class ManageFiles {
 	public void copyFiles(final DefaultListModel fileModel, final JTextField txt) {
 		for(int i = 0;i<fileModel.size(); i++) {
+			System.out.println("COPYING: " + fileModel.getElementAt(i));
 			File f = new File(fileModel.getElementAt(i).toString());
 			try {
 				if(!System.getProperty("os.name").equals("Linux"))
@@ -30,7 +31,6 @@ public class ManageFiles {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			System.out.println("COPYING: " + fileModel.getElementAt(i));
 		}
 		InstallBuilderWindow.content += "## FILES END ##\n\n## DIRS ##\n";
 	}

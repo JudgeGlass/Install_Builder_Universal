@@ -7,7 +7,7 @@ import javax.swing.UIManager;
 import com.InstallBuilder.windows.InstallBuilderWindow;
 
 public class Main {
-	public static final String version = "v0.0.2";
+	public static final String version = "v0.0.2.1";
 	
 	public static void main(String args[]) {
 		System.out.println("OS Name: " + System.getProperty("os.name"));
@@ -20,6 +20,7 @@ public class Main {
 			}
 			UIManager.put("Button.font", new Font(Font.SANS_SERIF, 0, 11));
 			UIManager.put("Label.font", new Font(Font.SANS_SERIF, 0, 11));
+			UIManager.put("RadioButton.font", new Font(Font.SANS_SERIF, 0, 11));
 			
 			InstallBuilderWindow window = new InstallBuilderWindow("Install Builder Universal [" + version + "]");
 			window.setVisable(true);
