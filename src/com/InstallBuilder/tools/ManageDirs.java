@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import org.apache.commons.io.FileUtils;
@@ -12,6 +11,7 @@ import org.apache.commons.io.FileUtils;
 import com.InstallBuilder.windows.InstallBuilderWindow;
 
 public class ManageDirs {
+	@SuppressWarnings("rawtypes")
 	public void copyDir(final DefaultListModel dirModel, final JTextField txt) {
 		if(dirModel.size() != 0) {
 			for(int i = 0;i<dirModel.size(); i++) {

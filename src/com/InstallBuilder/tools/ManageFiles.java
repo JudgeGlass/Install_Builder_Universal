@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JList;
 import javax.swing.JTextField;
 
 import org.apache.commons.io.FileUtils;
@@ -12,6 +11,7 @@ import org.apache.commons.io.FileUtils;
 import com.InstallBuilder.windows.InstallBuilderWindow;
 
 public class ManageFiles {
+	@SuppressWarnings("rawtypes")
 	public void copyFiles(final DefaultListModel fileModel, final JTextField txt) {
 		for(int i = 0;i<fileModel.size(); i++) {
 			System.out.println("COPYING: " + fileModel.getElementAt(i));

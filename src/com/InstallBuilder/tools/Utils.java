@@ -10,7 +10,6 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;

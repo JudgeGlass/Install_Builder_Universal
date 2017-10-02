@@ -95,6 +95,7 @@ public class InstallBuilderWindow {
 	
 	/** Adds The Components*/
 
+	@SuppressWarnings("deprecation")
 	private void initialize() {
 		menuBar();
 		addFileList();
@@ -267,7 +268,7 @@ public class InstallBuilderWindow {
 	
 	
 	private class BtnListener implements ActionListener{
-		@SuppressWarnings("unchecked")
+		@SuppressWarnings({ "unchecked", "deprecation" })
 		public void actionPerformed(ActionEvent e) {
 			String cmd = e.getActionCommand();
 			if(cmd.equals("FILE_DELETE")) {
@@ -454,6 +455,7 @@ public class InstallBuilderWindow {
 		
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void openConfiguration() {
 		OpenFile opf = new OpenFile();
 		String fileName = null;
