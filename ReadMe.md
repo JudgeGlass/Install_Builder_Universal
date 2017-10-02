@@ -8,7 +8,6 @@ Install on linux
 sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get install openjdk-8-jre
-sudo apt-get install mono-complete
 ```
 
 Run
