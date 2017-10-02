@@ -16,6 +16,12 @@ Run
 cd (Unziped Install Builder Directory)
 java -jar InstallBuilder.jar
 ```
+Run Installer
+-------------
+```shell
+cd install build dir/application name
+java -jar SETUP.jar
+```
 
 Image
 ------
