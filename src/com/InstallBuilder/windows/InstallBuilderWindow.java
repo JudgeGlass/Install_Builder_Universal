@@ -281,16 +281,43 @@ public class InstallBuilderWindow {
 				OpenFile opf = new OpenFile();
 				opf.open(panel);
 				if(opf.getFile().isEmpty()) return;
+				
+				for(int i = 0; i<fileModel.size(); i++) {
+					if(opf.getFile().equals(fileModel.getElementAt(i))) {
+						JOptionPane.showMessageDialog(null, "\"" + opf.getFile() + "\" already exists", "Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+				}
+				
+				if(opf.getFile().equals(license.getText())) {
+					JOptionPane.showMessageDialog(null, "\"" + opf.getFile() + "\" already exists as the license", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
 				fileModel.addElement(opf.getFile());
 			}else if(cmd.equals("OPEN_DIR")) {
 				OpenDirectory opd = new OpenDirectory();
 				opd.open(panel);
 				if(opd.getDir().isEmpty()) return;
+				
+				for(int i = 0; i<dirModel.size(); i++) {
+					if(opd.getDir().equals(dirModel.getElementAt(i))) {
+						JOptionPane.showMessageDialog(null, "\"" + opd.getDir() + "\" already exists", "Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+				}
+				
 				dirModel.addElement(opd.getDir());
 			}else if(cmd.equals("OPEN_LICENSE")) {
 				OpenFile opf = new OpenFile();
 				opf.open(panel);
 				if(opf.getFile().isEmpty()) return;
+				
+				if(fileModel.contains(opf.getFile())) {
+					JOptionPane.showMessageDialog(null, "\"" + opf.getFile() + "\" already exits in the file list", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
 				license.setText(opf.getFile());
 			}else if(cmd.equals("OPEN_MAINEXE")) {
 				OpenFile opf = new OpenFile();
@@ -414,7 +441,7 @@ public class InstallBuilderWindow {
 		saveFile.save(panel);
 		String dir = saveFile.getDir();
 		try {
-			PrintWriter writer = new PrintWriter(new File(dir + "/SaveInstallBuilder.dat"), "UTF-8");
+			PrintWriter writer = new PrintWriter(new File(dir + ".dat"), "UTF-8");
 			String linesToString = "";
 			for(int i = 0; i<lines.size(); i++) {
 				linesToString += lines.get(i) + "\n";
@@ -429,9 +456,15 @@ public class InstallBuilderWindow {
 	
 	private void openConfiguration() {
 		OpenFile opf = new OpenFile();
-		opf.open(panel);
-		
-		String fileName = opf.getFile();
+		String fileName = null;
+		try {
+			opf.open(panel);
+			fileName = opf.getFile();
+		}catch(Exception e) {
+			e.printStackTrace();
+			return;
+		}
+		if(opf.getFile().isEmpty()) return;
 		mainExe.setText(Utils.readLine(fileName, 0));
 		license.setText(Utils.readLine(fileName, 1));
 		apName.setText(Utils.readLine(fileName, 2));

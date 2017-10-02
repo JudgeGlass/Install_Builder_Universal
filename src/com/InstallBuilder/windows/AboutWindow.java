@@ -58,7 +58,7 @@ public class AboutWindow {
 		frame.getContentPane().add(lblImage);
 		
 		lblApName = new JLabel("Install Builder Universal");
-		lblApName.setBounds(77, 10, 300, 15);
+		lblApName.setBounds(77, 10, 120, 15);
 		lblApName.setForeground(Color.BLUE);
 		lblApName.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -77,7 +77,7 @@ public class AboutWindow {
 		lblAuthor.setBounds(77, 35, 300, 15);
 		frame.getContentPane().add(lblAuthor);
 		
-		lblVersion = new JLabel("Version: " + Main.version + " [Build Date: 10/1/17]");
+		lblVersion = new JLabel("Version: " + Main.version + " [Build Date: 10/2/17]");
 		lblVersion.setBounds(77, 60, 300, 15);
 		frame.getContentPane().add(lblVersion);
 		
@@ -109,10 +109,10 @@ public class AboutWindow {
 		frame.getContentPane().add(btnOk);
 		
 		btnLicense = new JButton("License");
-		btnLicense.setBounds(130, 225, 75, 20);
+		btnLicense.setBounds(125, 225, 80, 20);
 		btnLicense.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new GNULiceseWindow().setVisible(true);
+				new GNULicenseWindow().setVisible(true);
 			}
 		});
 		frame.getContentPane().add(btnLicense);
