@@ -29,6 +29,7 @@ import com.InstallBuilder.tools.ManageDirs;
 import com.InstallBuilder.tools.ManageFiles;
 import com.InstallBuilder.tools.OpenDirectory;
 import com.InstallBuilder.tools.OpenFile;
+import com.InstallBuilder.tools.OpenOtherFile;
 import com.InstallBuilder.tools.SaveFile;
 import com.InstallBuilder.tools.Utils;
 
@@ -280,22 +281,23 @@ public class InstallBuilderWindow {
 				}
 			}else if(cmd.equals("OPEN_FILE")) {
 				OpenFile opf = new OpenFile();
-				opf.open(panel);
-				if(opf.getFile().isEmpty()) return;
 				
-				for(int i = 0; i<fileModel.size(); i++) {
-					if(opf.getFile().equals(fileModel.getElementAt(i))) {
-						JOptionPane.showMessageDialog(null, "\"" + opf.getFile() + "\" already exists", "Error", JOptionPane.ERROR_MESSAGE);
-						return;
+				File files[] = opf.open(panel);
+				if(files.length == 0) return;
+				System.out.println("[DEBUG]: Index Length: " + files.length);
+				for(int x = 0; x < files.length; x++) {
+					if(fileModel.contains(files[x])) {
+						JOptionPane.showMessageDialog(null, "\"" + files[x] + "\" already exists", "Error", JOptionPane.ERROR_MESSAGE);
+						continue;
 					}
+					
+					if(files[x].equals(license.getText())) {
+						JOptionPane.showMessageDialog(null, "\"" + files[x] + "\" already exists as the license", "Error", JOptionPane.ERROR_MESSAGE);
+						continue;
+					}
+					fileModel.addElement(files[x]);
 				}
 				
-				if(opf.getFile().equals(license.getText())) {
-					JOptionPane.showMessageDialog(null, "\"" + opf.getFile() + "\" already exists as the license", "Error", JOptionPane.ERROR_MESSAGE);
-					return;
-				}
-				
-				fileModel.addElement(opf.getFile());
 			}else if(cmd.equals("OPEN_DIR")) {
 				OpenDirectory opd = new OpenDirectory();
 				opd.open(panel);
@@ -310,18 +312,18 @@ public class InstallBuilderWindow {
 				
 				dirModel.addElement(opd.getDir());
 			}else if(cmd.equals("OPEN_LICENSE")) {
-				OpenFile opf = new OpenFile();
-				opf.open(panel);
-				if(opf.getFile().isEmpty()) return;
+				OpenOtherFile opl = new OpenOtherFile();
+				opl.open(panel);
+				if(opl.getFile().isEmpty()) return;
 				
-				if(fileModel.contains(opf.getFile())) {
-					JOptionPane.showMessageDialog(null, "\"" + opf.getFile() + "\" already exits in the file list", "Error", JOptionPane.ERROR_MESSAGE);
+				if(fileModel.contains(opl.getFile())) {
+					JOptionPane.showMessageDialog(null, "\"" + opl.getFile() + "\" already exits in the file list", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				
-				license.setText(opf.getFile());
+				license.setText(opl.getFile());
 			}else if(cmd.equals("OPEN_MAINEXE")) {
-				OpenFile opf = new OpenFile();
+				OpenOtherFile opf = new OpenOtherFile();
 				opf.open(panel);
 				if(opf.getFile().isEmpty()) return;
 				mainExe.setText(opf.getFile());
@@ -457,7 +459,7 @@ public class InstallBuilderWindow {
 	
 	@SuppressWarnings("unchecked")
 	private void openConfiguration() {
-		OpenFile opf = new OpenFile();
+		OpenOtherFile opf = new OpenOtherFile();
 		String fileName = null;
 		try {
 			opf.open(panel);
