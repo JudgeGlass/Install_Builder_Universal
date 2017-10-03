@@ -1,5 +1,6 @@
 package com.InstallBuilder.windows;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -69,7 +71,6 @@ public class InstallBuilderWindow {
 	private JLabel lblApDec;
 	private JLabel lblInstallFolderName;
 	
-	private JButton btnMainExeBrowse;
 	private JButton btnLicenseBrowse;
 	private JButton btnMake;
 	private JButton btnApplication;
@@ -136,20 +137,15 @@ public class InstallBuilderWindow {
 		
 		mainExe = new JTextField();
 		mainExe.setBounds(5, 360, 150, 20);
+		mainExe.setToolTipText("Ex: program.exe or folder/pro.exe");
 		frame.getContentPane().add(mainExe);
 		
-		btnMainExeBrowse = new JButton("Browse...");
-		btnMainExeBrowse.setBounds(160, 359, 90, 20);
-		btnMainExeBrowse.setActionCommand("OPEN_MAINEXE");
-		btnMainExeBrowse.addActionListener(new BtnListener());
-		frame.getContentPane().add(btnMainExeBrowse);
-		
 		license = new JTextField();
-		license.setBounds(255, 360, 150, 20);
+		license.setBounds(160, 360, 150, 20);
 		frame.getContentPane().add(license);
 		
 		btnLicenseBrowse = new JButton("Browse...");
-		btnLicenseBrowse.setBounds(410, 359, 90, 20);
+		btnLicenseBrowse.setBounds(315, 359, 90, 20);
 		btnLicenseBrowse.setActionCommand("OPEN_LICENSE");
 		btnLicenseBrowse.addActionListener(new BtnListener());
 		frame.getContentPane().add(btnLicenseBrowse);
@@ -166,12 +162,12 @@ public class InstallBuilderWindow {
 		installFolderName.setBounds(315, 405, 150, 20);
 		frame.getContentPane().add(installFolderName);
 		
-		lblMainExe = new JLabel("Choose Main Executable:");
+		lblMainExe = new JLabel("Main Exe File(From either list)");
 		lblMainExe.setBounds(5, 345, 300, 15);
 		frame.getContentPane().add(lblMainExe);
 		
 		lblLicense = new JLabel("License:");
-		lblLicense.setBounds(255, 345, 100, 15);
+		lblLicense.setBounds(160, 345, 100, 15);
 		frame.getContentPane().add(lblLicense);
 		
 		lblApName = new JLabel("Application Name:");
@@ -281,8 +277,8 @@ public class InstallBuilderWindow {
 				}
 			}else if(cmd.equals("OPEN_FILE")) {
 				OpenFile opf = new OpenFile();
-				
 				File files[] = opf.open(panel);
+				
 				if(files.length == 0) return;
 				System.out.println("[DEBUG]: Index Length: " + files.length);
 				for(int x = 0; x < files.length; x++) {
@@ -291,7 +287,7 @@ public class InstallBuilderWindow {
 						continue;
 					}
 					
-					if(files[x].equals(license.getText())) {
+					if(files[x].toString().equals(license.getText())) {
 						JOptionPane.showMessageDialog(null, "\"" + files[x] + "\" already exists as the license", "Error", JOptionPane.ERROR_MESSAGE);
 						continue;
 					}
@@ -322,14 +318,13 @@ public class InstallBuilderWindow {
 				}
 				
 				license.setText(opl.getFile());
-			}else if(cmd.equals("OPEN_MAINEXE")) {
-				OpenOtherFile opf = new OpenOtherFile();
-				opf.open(panel);
-				if(opf.getFile().isEmpty()) return;
-				mainExe.setText(opf.getFile());
 			}else if(cmd.equals("MAKE")) {
 				if(fileModel.size() == 0) {
 					JOptionPane.showMessageDialog(null, "You need at least one file to continue", "Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				if(mainExe.getText().isEmpty()) {
+					JOptionPane.showMessageDialog(null, "\"Main Exe\" must be filled\nEx: program.exe or folder/pro.exe from the dir list or file list", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				
@@ -395,7 +390,6 @@ public class InstallBuilderWindow {
 		btnDirDelete.setEnabled(enable);
 		btnFileBrowse.setEnabled(enable);
 		btnDirBrowse.setEnabled(enable);
-		btnMainExeBrowse.setEnabled(enable);
 		btnLicenseBrowse.setEnabled(enable);
 		btnMake.setEnabled(enable);
 		
