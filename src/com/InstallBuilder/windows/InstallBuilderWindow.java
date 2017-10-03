@@ -27,6 +27,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
 import com.InstallBuilder.listeners.MenuActionListener;
+import com.InstallBuilder.tools.Logger;
 import com.InstallBuilder.tools.ManageDirs;
 import com.InstallBuilder.tools.ManageFiles;
 import com.InstallBuilder.tools.OpenDirectory;
@@ -79,8 +80,11 @@ public class InstallBuilderWindow {
 	
 	public static String content = "";
 	
+	private Logger log;
+	
 	/** Makes The Window */
-	public InstallBuilderWindow(final String title) {
+	public InstallBuilderWindow(final String title, final Logger log) {
+		this.log = log;
 		frame = new JFrame();
 		frame.setTitle(title);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -92,6 +96,7 @@ public class InstallBuilderWindow {
 		panel = new JPanel();
 		frame.add(panel);
 		
+		log.Info("Initializing Components...");
 		initialize();
 	}
 	
@@ -192,6 +197,10 @@ public class InstallBuilderWindow {
 		btnApplication.setBounds(718, 380, 75, 20);
 		btnApplication.setActionCommand("APPLICATTIONS");
 		btnApplication.addActionListener(new BtnListener());
+		if(System.getProperty("os.name").equals("Linux")) {
+			btnApplication.setEnabled(false);
+			btnApplication.setToolTipText("Not Compatible with your operating system");
+		}
 		frame.getContentPane().add(btnApplication);
 		
 		bar = new JProgressBar();
@@ -269,10 +278,13 @@ public class InstallBuilderWindow {
 		public void actionPerformed(ActionEvent e) {
 			String cmd = e.getActionCommand();
 			if(cmd.equals("FILE_DELETE")) {
-				if(!fileList.isSelectionEmpty())
+				if(!fileList.isSelectionEmpty()) {
+					log.Info("Removed: " + fileList.getSelectedIndex());
 					fileModel.removeElementAt(fileList.getSelectedIndex());
+				}
 			}else if(cmd.equals("DIR_DELETE")) {
 				if(!dirList.isSelectionEmpty()) {
+					log.Info("Removed: " + fileList.getSelectedIndex());
 					dirModel.remove(dirList.getLeadSelectionIndex());
 				}
 			}else if(cmd.equals("OPEN_FILE")) {
@@ -280,17 +292,20 @@ public class InstallBuilderWindow {
 				File files[] = opf.open(panel);
 				
 				if(files.length == 0) return;
-				System.out.println("[DEBUG]: Index Length: " + files.length);
+				log.Custom("Index Length: " + files.length, "DEBUG", true);
 				for(int x = 0; x < files.length; x++) {
 					if(fileModel.contains(files[x])) {
+						log.Error("\"" + files[x] + "\" already exists");
 						JOptionPane.showMessageDialog(null, "\"" + files[x] + "\" already exists", "Error", JOptionPane.ERROR_MESSAGE);
 						continue;
 					}
 					
 					if(files[x].toString().equals(license.getText())) {
+						log.Error("\"" + files[x] + "\" already exists as the license");
 						JOptionPane.showMessageDialog(null, "\"" + files[x] + "\" already exists as the license", "Error", JOptionPane.ERROR_MESSAGE);
 						continue;
 					}
+					log.Info("Adding: " + files[x] + " to FileModel");
 					fileModel.addElement(files[x]);
 				}
 				
@@ -301,11 +316,12 @@ public class InstallBuilderWindow {
 				
 				for(int i = 0; i<dirModel.size(); i++) {
 					if(opd.getDir().equals(dirModel.getElementAt(i))) {
+						log.Error("\"" + opd.getDir() + "\" already exists");
 						JOptionPane.showMessageDialog(null, "\"" + opd.getDir() + "\" already exists", "Error", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 				}
-				
+				log.Info("Adding: " + opd.getDir() + " to DirModel");
 				dirModel.addElement(opd.getDir());
 			}else if(cmd.equals("OPEN_LICENSE")) {
 				OpenOtherFile opl = new OpenOtherFile();
@@ -313,6 +329,7 @@ public class InstallBuilderWindow {
 				if(opl.getFile().isEmpty()) return;
 				
 				if(fileModel.contains(opl.getFile())) {
+					log.Error("\"" + opl.getFile() + "\" already exits in the file list");
 					JOptionPane.showMessageDialog(null, "\"" + opl.getFile() + "\" already exits in the file list", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
@@ -320,24 +337,30 @@ public class InstallBuilderWindow {
 				license.setText(opl.getFile());
 			}else if(cmd.equals("MAKE")) {
 				if(fileModel.size() == 0) {
+					log.Error("You need at least one file to continue");
 					JOptionPane.showMessageDialog(null, "You need at least one file to continue", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				if(mainExe.getText().isEmpty()) {
+					log.Error("\"Main Exe\" must be filled\nEx: program.exe or folder/pro.exe from the dir list or file list");
 					JOptionPane.showMessageDialog(null, "\"Main Exe\" must be filled\nEx: program.exe or folder/pro.exe from the dir list or file list", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
 				
 				if(apName.getText().isEmpty()) {
+					log.Error("\"Application Name\" must be filled");
 					JOptionPane.showMessageDialog(null, "\"Application Name\" must be filled", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}else if(license.getText().isEmpty()){
+					log.Error("\"License\" must be filled");
 					JOptionPane.showMessageDialog(null, "\"License\" must be filled", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}else if(installFolderName.getText().isEmpty()){
+					log.Error("\"Install Folder Name\" must be filled");
 					JOptionPane.showMessageDialog(null, "\"Install Folder Name\" must be filled", "Error", JOptionPane.ERROR_MESSAGE);
 					return;
 				}else if(apDec.getText().isEmpty()){
+					log.Warning("Description not given");
 					apDec.setText("Description not given");
 				}
 				
@@ -348,6 +371,7 @@ public class InstallBuilderWindow {
 				try {
 					Process p = Runtime.getRuntime().exec("explorer " + System.getProperty("user.dir"));
 				} catch (IOException e1) {
+					log.Error("Could not run program: " + e1.getMessage());
 					JOptionPane.showMessageDialog(null, "Error:\n" + e1, "Error", JOptionPane.ERROR_MESSAGE);
 					e1.printStackTrace();
 				}
@@ -356,31 +380,39 @@ public class InstallBuilderWindow {
 	}
 	
 	private void make() {
+		log.Custom("Starting Thread", "DEBUG", true);
 		new Thread(new Runnable() {
 			public void run() {
 				File fi = new File(apName.getText());
 				fi.mkdir();
 				
+				log.Info("Making list...");
 				content = makeConf(content);
-				
+				log.Info("Copying Files...");
 				ManageFiles f = new ManageFiles();
 				f.copyFiles(fileModel, apName);
+				log.Info("Copying Dirs...");
 				ManageDirs d = new ManageDirs();
 				d.copyDir(dirModel, apName);
 				content += "main-executable=" + mainExe.getText();
+				log.Info("Writing conf...");
 				Utils.writeFile("Conf.txt", content);
 				
-				if(!System.getProperty("os.name").equals("Linux"))
+				if(!System.getProperty("os.name").equals("Linux")) {
+					log.Info("Copy File Type: Linux");
 					Utils.copyFile(new File(license.getText()), new File(apName.getText() + "/" + Utils.indexOf(license.getText(), '\\')));
-				else
+				}else {
+					log.Info("Copy File Type: Windows/Other");
 					Utils.copyFile(new File(license.getText()), new File(apName.getText() + "/" + Utils.indexOf(license.getText(), '/')));
-				Utils.copyFile(new File("Conf.txt"), new File(apName.getText() + "/Conf.txt"));
+				}
+					Utils.copyFile(new File("Conf.txt"), new File(apName.getText() + "/Conf.txt"));
 				Utils.copyFile(new File("Cf32.dat"), new File(apName.getText() + "/SETUP.jar"));
 				bar.hide();
 				enableButtons(true);
 				content = "";
 				System.out.println(content);
 				JOptionPane.showMessageDialog(null, "Setup is completed!", "Done", JOptionPane.INFORMATION_MESSAGE);
+				log.Info("Setup is complete");
 			}
 		}).start();
 	}
@@ -411,6 +443,7 @@ public class InstallBuilderWindow {
 	}
 	
 	private void saveConfiguration() {
+		log.Info("Saving...");
 		List<String> lines = new ArrayList<String>();
 		lines.add(mainExe.getText());
 		lines.add(license.getText());
@@ -445,14 +478,17 @@ public class InstallBuilderWindow {
 			}
 			writer.write(linesToString);
 			writer.close();
+			log.Info("Configuration saved!");
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			e.printStackTrace();
+			log.Error("Could not save: " + e.getMessage());
 		}
 		
 	}
 	
 	@SuppressWarnings("unchecked")
 	private void openConfiguration() {
+		log.Info("Opening file...");
 		OpenOtherFile opf = new OpenOtherFile();
 		String fileName = null;
 		try {
