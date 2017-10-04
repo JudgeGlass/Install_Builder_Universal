@@ -30,9 +30,6 @@ import java.util.Date;
 public class Logger {
 	DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss");
 	Date date;
-	private static String ErrorStream = "";
-	private static String InfoStream = "";
-	private static String WarningStream = "";
 	private static String MainLog = "";
 	private static String CustomStream = "";
 	

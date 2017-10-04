@@ -1,6 +1,5 @@
 package com.InstallBuilder.windows;
 
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -12,7 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -397,6 +395,7 @@ public class InstallBuilderWindow {
 	private void make() {
 		log.Custom("Starting Thread", "DEBUG", true);
 		new Thread(new Runnable() {
+			@SuppressWarnings("deprecation")
 			public void run() {
 				File fi = new File(apName.getText());
 				fi.mkdir();
