@@ -23,12 +23,13 @@ public class Utils {
 		return txt.substring(txt.lastIndexOf(ch) + 1);
 	}
 	
-	public static void copyFile(File src, File dec) {
+	public static void copyFile(File src, File dec, Logger log) {
 		try {
 			FileUtils.copyFile(src, dec);
 		} catch (IOException e) {
 			JOptionPane.showMessageDialog(null, "Error:\n" + e, "Error", JOptionPane.ERROR_MESSAGE);
 			e.printStackTrace();
+			log.Error("Could not copy \"" + src + "\"\n" + e);
 		}
 	}
 	

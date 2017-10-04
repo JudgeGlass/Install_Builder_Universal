@@ -169,7 +169,7 @@ public class InstallBuilderWindow {
 		installFolderName.setBounds(315, 405, 150, 20);
 		frame.getContentPane().add(installFolderName);
 		
-		lblMainExe = new JLabel("Main Exe File(From either list)");
+		lblMainExe = new JLabel("Main Exe File(From list)");
 		lblMainExe.setBounds(5, 345, 300, 15);
 		frame.getContentPane().add(lblMainExe);
 		
@@ -405,12 +405,12 @@ public class InstallBuilderWindow {
 				content = makeConf(content);
 				log.Info("Copying Files...");
 				ManageFiles f = new ManageFiles();
-				f.copyFiles(fileModel, apName, fileBar);
+				f.copyFiles(fileModel, apName, fileBar, log);
 				fileBar.hide();
 				dirBar.show();
 				log.Info("Copying Dirs...");
 				ManageDirs d = new ManageDirs();
-				d.copyDir(dirModel, apName, dirBar);
+				d.copyDir(dirModel, apName, dirBar, log);
 				dirBar.hide();
 				lblInstalling.hide();
 				content += "main-executable=" + mainExe.getText();
@@ -419,13 +419,13 @@ public class InstallBuilderWindow {
 				
 				if(!System.getProperty("os.name").equals("Linux")) {
 					log.Info("Copy File Type: Linux");
-					Utils.copyFile(new File(license.getText()), new File(apName.getText() + "/" + Utils.indexOf(license.getText(), '\\')));
+					Utils.copyFile(new File(license.getText()), new File(apName.getText() + "/" + Utils.indexOf(license.getText(), '\\')), log);
 				}else {
 					log.Info("Copy File Type: Windows/Other");
-					Utils.copyFile(new File(license.getText()), new File(apName.getText() + "/" + Utils.indexOf(license.getText(), '/')));
+					Utils.copyFile(new File(license.getText()), new File(apName.getText() + "/" + Utils.indexOf(license.getText(), '/')), log);
 				}
-					Utils.copyFile(new File("Conf.txt"), new File(apName.getText() + "/Conf.txt"));
-				Utils.copyFile(new File("Cf32.dat"), new File(apName.getText() + "/SETUP.jar"));
+					Utils.copyFile(new File("Conf.txt"), new File(apName.getText() + "/Conf.txt"), log);
+				Utils.copyFile(new File("Cf32.dat"), new File(apName.getText() + "/SETUP.jar"), log);
 				
 				enableButtons(true);
 				content = "";
@@ -514,6 +514,7 @@ public class InstallBuilderWindow {
 			opf.open(panel);
 			fileName = opf.getFile();
 		}catch(Exception e) {
+			log.Error("Could not set file name\n" + e);
 			e.printStackTrace();
 			return;
 		}

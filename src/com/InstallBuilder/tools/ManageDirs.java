@@ -13,13 +13,13 @@ import com.InstallBuilder.windows.InstallBuilderWindow;
 
 public class ManageDirs {
 	@SuppressWarnings("rawtypes")
-	public void copyDir(final DefaultListModel dirModel, final JTextField txt, JProgressBar bar) {
+	public void copyDir(final DefaultListModel dirModel, final JTextField txt, JProgressBar bar, Logger log) {
 		bar.setValue(0);
 		bar.setMinimum(0);
 		bar.setMaximum(dirModel.size() - 1);
 		if(dirModel.size() != 0) {
 			for(int i = 0;i<dirModel.size(); i++) {
-				System.out.println("COPYING: <DIR> " + dirModel.getElementAt(i));
+				log.Info("COPYING: <DIR> " + dirModel.getElementAt(i));
 				File f = new File(dirModel.getElementAt(i).toString());
 				try {
 					if(!System.getProperty("os.name").equals("Linux"))
@@ -35,6 +35,7 @@ public class ManageDirs {
 								Utils.indexOf(dirModel.getElementAt(i).toString(), '/')));
 				} catch (IOException e) {
 					e.printStackTrace();
+					log.Error("Could not copy directory\n" + e);
 				}
 				bar.setValue(i);
 			}
