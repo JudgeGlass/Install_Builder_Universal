@@ -76,7 +76,9 @@ public class InstallBuilderWindow {
 	private JButton btnMake;
 	private JButton btnApplication;
 	
-	private JProgressBar bar;
+	private JProgressBar fileBar;
+	private JProgressBar dirBar;
+	private JLabel lblInstalling;
 	
 	public static String content = "";
 	
@@ -203,11 +205,24 @@ public class InstallBuilderWindow {
 		}
 		frame.getContentPane().add(btnApplication);
 		
-		bar = new JProgressBar();
-		bar.setIndeterminate(true);
-		bar.setBounds(475, 405, 240, 15);
-		bar.hide();
-		frame.getContentPane().add(bar);
+		lblInstalling = new JLabel("Making...");
+		lblInstalling.setBounds(475, 390, 100, 15);
+		lblInstalling.hide();
+		frame.getContentPane().add(lblInstalling);
+		
+		fileBar = new JProgressBar();
+		//bar.setIndeterminate(true);
+		fileBar.setStringPainted(true);
+		fileBar.setBounds(475, 405, 240, 15);
+		fileBar.hide();
+		frame.getContentPane().add(fileBar);
+		
+		dirBar = new JProgressBar();
+		//bar.setIndeterminate(true);
+		dirBar.setStringPainted(true);
+		dirBar.setBounds(475, 405, 240, 15);
+		dirBar.hide();
+		frame.getContentPane().add(dirBar);
 	}
 	
 	/** Make The Menu Bar*/
@@ -364,7 +379,7 @@ public class InstallBuilderWindow {
 					apDec.setText("Description not given");
 				}
 				
-				bar.show();
+				fileBar.show();
 				enableButtons(false);
 				make();
 			}else if(cmd.equals("APPLICATTIONS")) {
@@ -385,15 +400,19 @@ public class InstallBuilderWindow {
 			public void run() {
 				File fi = new File(apName.getText());
 				fi.mkdir();
-				
+				lblInstalling.show();
 				log.Info("Making list...");
 				content = makeConf(content);
 				log.Info("Copying Files...");
 				ManageFiles f = new ManageFiles();
-				f.copyFiles(fileModel, apName);
+				f.copyFiles(fileModel, apName, fileBar);
+				fileBar.hide();
+				dirBar.show();
 				log.Info("Copying Dirs...");
 				ManageDirs d = new ManageDirs();
-				d.copyDir(dirModel, apName);
+				d.copyDir(dirModel, apName, dirBar);
+				dirBar.hide();
+				lblInstalling.hide();
 				content += "main-executable=" + mainExe.getText();
 				log.Info("Writing conf...");
 				Utils.writeFile("Conf.txt", content);
@@ -407,7 +426,7 @@ public class InstallBuilderWindow {
 				}
 					Utils.copyFile(new File("Conf.txt"), new File(apName.getText() + "/Conf.txt"));
 				Utils.copyFile(new File("Cf32.dat"), new File(apName.getText() + "/SETUP.jar"));
-				bar.hide();
+				
 				enableButtons(true);
 				content = "";
 				System.out.println(content);

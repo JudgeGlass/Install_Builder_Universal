@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 
 import org.apache.commons.io.FileUtils;
@@ -12,7 +13,9 @@ import com.InstallBuilder.windows.InstallBuilderWindow;
 
 public class ManageFiles {
 	@SuppressWarnings("rawtypes")
-	public void copyFiles(final DefaultListModel fileModel, final JTextField txt) {
+	public void copyFiles(final DefaultListModel fileModel, final JTextField txt, JProgressBar bar) {
+		bar.setMinimum(0);
+		bar.setMaximum(fileModel.size() - 1);
 		for(int i = 0;i<fileModel.size(); i++) {
 			System.out.println("COPYING: " + fileModel.getElementAt(i));
 			File f = new File(fileModel.getElementAt(i).toString());
@@ -31,6 +34,7 @@ public class ManageFiles {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			bar.setValue(i);
 		}
 		InstallBuilderWindow.content += "## FILES END ##\n\n## DIRS ##\n";
 	}

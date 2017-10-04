@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JProgressBar;
 import javax.swing.JTextField;
 
 import org.apache.commons.io.FileUtils;
@@ -12,7 +13,10 @@ import com.InstallBuilder.windows.InstallBuilderWindow;
 
 public class ManageDirs {
 	@SuppressWarnings("rawtypes")
-	public void copyDir(final DefaultListModel dirModel, final JTextField txt) {
+	public void copyDir(final DefaultListModel dirModel, final JTextField txt, JProgressBar bar) {
+		bar.setValue(0);
+		bar.setMinimum(0);
+		bar.setMaximum(dirModel.size() - 1);
 		if(dirModel.size() != 0) {
 			for(int i = 0;i<dirModel.size(); i++) {
 				System.out.println("COPYING: <DIR> " + dirModel.getElementAt(i));
@@ -32,6 +36,7 @@ public class ManageDirs {
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				bar.setValue(i);
 			}
 			InstallBuilderWindow.content += "## DIRS END ##\n";
 		}else {
