@@ -38,7 +38,7 @@ public class AboutWindow {
 		frame = new JFrame();
 		frame.setTitle("About");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setSize(300, 280);
+		frame.setSize(310, 290);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setLayout(null);
@@ -77,7 +77,7 @@ public class AboutWindow {
 		lblAuthor.setBounds(77, 35, 300, 15);
 		frame.getContentPane().add(lblAuthor);
 		
-		lblVersion = new JLabel("Version: " + Main.version + " [Build Date: 10/2/17]");
+		lblVersion = new JLabel("Version: " + Main.version + " [Build Date: 10/4/17]");
 		lblVersion.setBounds(77, 60, 300, 15);
 		frame.getContentPane().add(lblVersion);
 		

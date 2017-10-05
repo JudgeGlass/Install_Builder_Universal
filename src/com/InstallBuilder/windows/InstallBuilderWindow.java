@@ -37,8 +37,8 @@ import com.InstallBuilder.tools.Utils;
 public class InstallBuilderWindow {
 	
 	/** Window Dimensions */
-	private final int WIDTH = 805;
-	private final int HEIGHT = 460;
+	private final int WIDTH = 820;
+	private final int HEIGHT = 470;
 	
 	/** Components */
 	private JFrame frame;
@@ -202,7 +202,6 @@ public class InstallBuilderWindow {
 			btnApplication.setToolTipText("Not Compatible with your operating system");
 		}
 		frame.getContentPane().add(btnApplication);
-		
 		lblInstalling = new JLabel("Making...");
 		lblInstalling.setBounds(475, 390, 100, 15);
 		lblInstalling.hide();
@@ -226,7 +225,7 @@ public class InstallBuilderWindow {
 	/** Make The Menu Bar*/
 	private void menuBar() {
 		menuBar = new JMenuBar();
-		menuBar.setBounds(0, 0, 795, 20);
+		menuBar.setBounds(0, 0, frame.getWidth(), 20);
 		frame.getContentPane().add(menuBar);
 		
 		fileMenu = new JMenu("File");
@@ -285,7 +284,9 @@ public class InstallBuilderWindow {
 		frame.setVisible(vis);
 	}
 	
-	
+	/**
+	 * Button Commands
+	 */
 	private class BtnListener implements ActionListener{
 		@SuppressWarnings({ "unchecked", "deprecation" })
 		public void actionPerformed(ActionEvent e) {
@@ -392,6 +393,9 @@ public class InstallBuilderWindow {
 		}
 	}
 	
+	/**
+	 * Makes the application
+	 */
 	private void make() {
 		log.Custom("Starting Thread", "DEBUG", true);
 		new Thread(new Runnable() {
@@ -435,6 +439,9 @@ public class InstallBuilderWindow {
 		}).start();
 	}
 	
+	/**
+	 * enable or disable buttons
+	 */
 	private void enableButtons(final boolean enable) {
 		btnFileDelete.setEnabled(enable);
 		btnDirDelete.setEnabled(enable);
@@ -460,6 +467,9 @@ public class InstallBuilderWindow {
 		return conf;
 	}
 	
+	/**
+	 * Saves the fields
+	 */
 	private void saveConfiguration() {
 		log.Info("Saving...");
 		List<String> lines = new ArrayList<String>();
@@ -489,6 +499,10 @@ public class InstallBuilderWindow {
 		saveFile.save(panel);
 		String dir = saveFile.getDir();
 		try {
+			if(new File(dir + ".dat").exists()) {
+				JOptionPane.showMessageDialog(null, "File already exists", "Error", JOptionPane.ERROR_MESSAGE);
+				return;
+			}
 			PrintWriter writer = new PrintWriter(new File(dir + ".dat"), "UTF-8");
 			String linesToString = "";
 			for(int i = 0; i<lines.size(); i++) {
@@ -504,6 +518,9 @@ public class InstallBuilderWindow {
 		
 	}
 	
+	/**
+	 * Fills in fields from save file
+	 */
 	@SuppressWarnings("unchecked")
 	private void openConfiguration() {
 		log.Info("Opening file...");

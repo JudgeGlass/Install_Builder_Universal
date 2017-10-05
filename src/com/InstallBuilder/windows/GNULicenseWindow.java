@@ -21,7 +21,7 @@ public class GNULicenseWindow {
 		frame = new JFrame();
 		frame.setTitle("License");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setSize(600, 480);
+		frame.setSize(630, 490);
 		frame.setLocationRelativeTo(null);
 		frame.setLayout(null);
 		frame.setResizable(false);
@@ -36,11 +36,11 @@ public class GNULicenseWindow {
 		txtArea = new JTextArea();
 		txtArea.setEditable(false);
 		JScrollPane sp = new JScrollPane(txtArea);
-		sp.setBounds(5, 5, 580, 410);
+		sp.setBounds(5, 5, 600, 410);
 		frame.getContentPane().add(sp);
 		
 		btnOk = new JButton("OK");
-		btnOk.setBounds(510, 420, 75, 20);
+		btnOk.setBounds(510, 420, 95, 20);
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frame.dispose();
