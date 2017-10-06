@@ -8,7 +8,8 @@ import com.JudgeGlass.InstallBuilder.tools.Logger;
 import com.JudgeGlass.InstallBuilder.windows.InstallBuilderWindow;
 
 public class Main {
-	public static final String version = "v0.0.3.2";
+	public static final String version = "v0.0.3.3";
+	public static final boolean isDebug = true;
 	
 	public static void main(String args[]) {
 		Logger log = new Logger("Latest.log");
@@ -30,6 +31,10 @@ public class Main {
 			log.Info("Starting Program...");
 			InstallBuilderWindow window = new InstallBuilderWindow("Install Builder Universal [" + version + "]", log);
 			window.setVisable(true);
+			
+			if(Main.isDebug) {
+				JOptionPane.showMessageDialog(null, "This is a Install builder " + Main.version + " DEBUG.\nPlease accecpt bugs.", "Debug Warning", JOptionPane.WARNING_MESSAGE);
+			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error:\n" + e);
 			e.printStackTrace();

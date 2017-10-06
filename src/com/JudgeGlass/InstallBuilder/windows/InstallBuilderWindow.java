@@ -24,6 +24,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import com.JudgeGlass.InstallBuilder.Main;
 import com.JudgeGlass.InstallBuilder.listeners.MenuActionListener;
 import com.JudgeGlass.InstallBuilder.tools.Logger;
 import com.JudgeGlass.InstallBuilder.tools.ManageDirs;
