@@ -2,6 +2,10 @@ About
 -----
 This is a install wizard maker for Linux and MacOS (Also works with Windows but not recommended. Use the normal "install_Builder" repo)
 
+Java 9
+------
+There are still issues if running in Java 9. Please use Java 8.
+
 Install on linux
 -----------------
 ```shell
