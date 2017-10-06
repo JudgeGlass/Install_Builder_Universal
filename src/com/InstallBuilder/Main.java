@@ -8,7 +8,7 @@ import com.InstallBuilder.tools.Logger;
 import com.InstallBuilder.windows.InstallBuilderWindow;
 
 public class Main {
-	public static final String version = "v0.0.3";
+	public static final String version = "v0.0.3.1";
 	
 	public static void main(String args[]) {
 		Logger log = new Logger("Latest.log");

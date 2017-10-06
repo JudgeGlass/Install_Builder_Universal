@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 
 import com.InstallBuilder.listeners.MenuActionListener;
 import com.InstallBuilder.tools.Logger;
@@ -113,17 +114,17 @@ public class InstallBuilderWindow {
 		frame.getContentPane().add(lblChooseFile);
 		
 		lblChooseDir = new JLabel("Choose Directory");
-		lblChooseDir.setBounds(495, 20, 175, 15);
+		lblChooseDir.setBounds(445, 20, 175, 15);
 		frame.getContentPane().add(lblChooseDir);
 		
 		btnFileDelete = new JButton("Delete");
-		btnFileDelete.setBounds(230, 240, 75, 20);
+		btnFileDelete.setBounds(280, 240, 75, 20);
 		btnFileDelete.setActionCommand("FILE_DELETE");
 		btnFileDelete.addActionListener(new BtnListener());
 		frame.getContentPane().add(btnFileDelete);
 		
 		btnDirDelete = new JButton("Delete");
-		btnDirDelete.setBounds(718, 240, 75, 20);
+		btnDirDelete.setBounds(730, 240, 75, 20);
 		btnDirDelete.setActionCommand("DIR_DELETE");
 		btnDirDelete.addActionListener(new BtnListener());
 		frame.getContentPane().add(btnDirDelete);
@@ -135,7 +136,7 @@ public class InstallBuilderWindow {
 		frame.getContentPane().add(btnFileBrowse);
 		
 		btnDirBrowse = new JButton("Browse...");
-		btnDirBrowse.setBounds(495, 240, 90, 20);
+		btnDirBrowse.setBounds(445, 240, 90, 20);
 		btnDirBrowse.setActionCommand("OPEN_DIR");
 		btnDirBrowse.addActionListener(new BtnListener());
 		frame.getContentPane().add(btnDirBrowse);
@@ -260,7 +261,6 @@ public class InstallBuilderWindow {
 		JMenuItem log = new JMenuItem("Latest Log");
 		log.setActionCommand("LOG");
 		log.addActionListener(new MenuActionListener());
-		
 		fileMenu.add(openConf);
 		fileMenu.add(saveConf);
 		fileMenu.add(log);
@@ -272,7 +272,7 @@ public class InstallBuilderWindow {
 		fileModel = new DefaultListModel();
 		fileList = new JList(fileModel);
 		JScrollPane sp = new JScrollPane(fileList);
-		sp.setBounds(5, 35, 300, 200);
+		sp.setBounds(5, 35, 350, 200);
 		frame.getContentPane().add(sp);
 	}
 	
@@ -281,7 +281,7 @@ public class InstallBuilderWindow {
 		dirModel = new DefaultListModel();
 		dirList = new JList(dirModel);
 		JScrollPane sp = new JScrollPane(dirList);
-		sp.setBounds(495, 35, 300, 200);
+		sp.setBounds(445, 35, 360, 200);
 		frame.getContentPane().add(sp);
 	}
 	

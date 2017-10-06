@@ -77,7 +77,7 @@ public class AboutWindow {
 		lblAuthor.setBounds(77, 35, 300, 15);
 		frame.getContentPane().add(lblAuthor);
 		
-		lblVersion = new JLabel("Version: " + Main.version + " [Build Date: 10/4/17]");
+		lblVersion = new JLabel("Version: " + Main.version + " [Build Date: 10/5/17]");
 		lblVersion.setBounds(77, 60, 300, 15);
 		frame.getContentPane().add(lblVersion);
 		
