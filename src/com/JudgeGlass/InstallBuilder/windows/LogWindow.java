@@ -1,4 +1,4 @@
-package com.InstallBuilder.windows;
+package com.JudgeGlass.InstallBuilder.windows;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

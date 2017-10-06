@@ -1,4 +1,4 @@
-package com.InstallBuilder.tools;
+package com.JudgeGlass.InstallBuilder.tools;
 
 /*
  * Copyright 2012 Hunter Wilcox
