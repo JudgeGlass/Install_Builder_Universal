@@ -257,8 +257,13 @@ public class InstallBuilderWindow {
 			}
 		});
 		
+		JMenuItem log = new JMenuItem("Latest Log");
+		log.setActionCommand("LOG");
+		log.addActionListener(new MenuActionListener());
+		
 		fileMenu.add(openConf);
 		fileMenu.add(saveConf);
+		fileMenu.add(log);
 		fileMenu.add(exitFile);
 	}
 	
