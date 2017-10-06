@@ -51,7 +51,7 @@ public class AboutWindow {
 	}
 	
 	private void initialize() {
-		ImageIcon image = new ImageIcon(getClass().getResource("/com/InstallBuilder/resources/MainIcon.png"));
+		ImageIcon image = new ImageIcon(getClass().getResource("/com/JudgeGlass/InstallBuilder/resources/MainIcon.png"));
 		lblImage = new JLabel();
 		lblImage.setIcon(image);
 		lblImage.setBounds(5, 5, 64, 64);

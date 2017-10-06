@@ -31,7 +31,7 @@ public class Utils {
 	
 	public String getLicenseFile() {
 		String cont = "";
-		InputStream input = getClass().getResourceAsStream("/com/InstallBuilder/resources/LICENSE.txt");
+		InputStream input = getClass().getResourceAsStream("/com/JudgeGlass/InstallBuilder/resources/LICENSE.txt");
 		try {
 			cont = IOUtils.toString(input, "UTF-8");
 		} catch (IOException e) {
