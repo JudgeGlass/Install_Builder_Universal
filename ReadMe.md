@@ -1,26 +1,30 @@
 About
 -----
-This is a install wizard maker for Linux and MacOS (Also works with Windows but not recommended. Use the normal "install_Builder" repo)
+This is a install wizard maker for Windows, MacOS, and Linux
 
 Java 9
 ------
 There are still issues if running in Java 9. Please use Java 8.
 
-Install on linux
+Install
 -----------------
+Linux:
 ```shell
 sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get install openjdk-8-jre
 ```
+Windows/MacOS:
+- Install Java 8+
+- Run jar
 
-Run
+Run (Linux)
 ---
 ```shell
 cd (Unziped Install Builder Directory)
 java -jar InstallBuilder.jar
 ```
-Run Installer
+Run Installer (Linux)
 -------------
 ```shell
 cd install build dir/application name
