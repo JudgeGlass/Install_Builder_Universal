@@ -24,7 +24,6 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import com.JudgeGlass.InstallBuilder.Main;
 import com.JudgeGlass.InstallBuilder.listeners.MenuActionListener;
 import com.JudgeGlass.InstallBuilder.tools.Logger;
 import com.JudgeGlass.InstallBuilder.tools.ManageDirs;
@@ -504,7 +503,7 @@ public class InstallBuilderWindow {
 		saveFile.save(panel);
 		String dir = saveFile.getDir();
 		try {
-			if(new File(dir + ".dat").exists()) {
+			if(new File(dir).exists()) {
 				JOptionPane.showMessageDialog(null, "File already exists", "Error", JOptionPane.ERROR_MESSAGE);
 				return;
 			}
