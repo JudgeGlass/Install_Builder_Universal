@@ -21,15 +21,15 @@ public class ManageFiles {
 			File f = new File(fileModel.getElementAt(i).toString());
 			try {
 				if(!System.getProperty("os.name").equals("Linux"))
-					InstallBuilderWindow.content +=  Utils.indexOf(fileModel.getElementAt(i).toString(), '\\') + "\n";
+					InstallBuilderWindow.content +=  "Files\\" + Utils.indexOf(fileModel.getElementAt(i).toString(), '\\') + "\n";
 				else
-					InstallBuilderWindow.content +=  Utils.indexOf(fileModel.getElementAt(i).toString(), '/') + "\n";
+					InstallBuilderWindow.content +=  "Files/" + Utils.indexOf(fileModel.getElementAt(i).toString(), '/') + "\n";
 				
 				if(!System.getProperty("os.name").equals("Linux"))
-					FileUtils.copyFile(f, new File(System.getProperty("user.dir") + "\\" + txt.getText() + "\\" + 
+					FileUtils.copyFile(f, new File(System.getProperty("user.dir") + "\\" + txt.getText() + "\\" + "Files\\" + 
 							Utils.indexOf(fileModel.getElementAt(i).toString(), '\\')));
 				else
-					FileUtils.copyFile(f, new File(System.getProperty("user.dir") + "/" + txt.getText() + "/" + 
+					FileUtils.copyFile(f, new File(System.getProperty("user.dir") + "/" + txt.getText() + "/Files/" + 
 							Utils.indexOf(fileModel.getElementAt(i).toString(), '/')));
 			} catch (IOException e) {
 				e.printStackTrace();

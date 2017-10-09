@@ -23,15 +23,15 @@ public class ManageDirs {
 				File f = new File(dirModel.getElementAt(i).toString());
 				try {
 					if(!System.getProperty("os.name").equals("Linux"))
-						InstallBuilderWindow.content +=  Utils.indexOf(dirModel.getElementAt(i).toString(), '\\') + "\n";
+						InstallBuilderWindow.content +=  "Files\\" + Utils.indexOf(dirModel.getElementAt(i).toString(), '\\') + "\n";
 					else
-						InstallBuilderWindow.content +=  Utils.indexOf(dirModel.getElementAt(i).toString(), '/') + "\n";
+						InstallBuilderWindow.content +=  "Files/" + Utils.indexOf(dirModel.getElementAt(i).toString(), '/') + "\n";
 					
 					if(!System.getProperty("os.name").equals("Linux"))
-						FileUtils.copyDirectory(f, new File(System.getProperty("user.dir") + "/" + txt.getText() + "/" + 
+						FileUtils.copyDirectory(f, new File(System.getProperty("user.dir") + "/" + txt.getText() + "/" + "/Files/" + 
 								Utils.indexOf(dirModel.getElementAt(i).toString(), '\\')));
 					else
-						FileUtils.copyDirectory(f, new File(System.getProperty("user.dir") + "/" + txt.getText() + "/" + 
+						FileUtils.copyDirectory(f, new File(System.getProperty("user.dir") + "/" + txt.getText() + "/Files/" + 
 								Utils.indexOf(dirModel.getElementAt(i).toString(), '/')));
 				} catch (IOException e) {
 					e.printStackTrace();

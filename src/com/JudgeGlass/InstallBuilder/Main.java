@@ -8,8 +8,8 @@ import com.JudgeGlass.InstallBuilder.tools.Logger;
 import com.JudgeGlass.InstallBuilder.windows.InstallBuilderWindow;
 
 public class Main {
-	public static final String version = "v0.0.3.3";
-	public static final boolean isDebug = true;
+	public static final String version = "v0.0.4";
+	public static final boolean isDebug = false;
 	
 	public static void main(String args[]) {
 		Logger log = new Logger("Latest.log");

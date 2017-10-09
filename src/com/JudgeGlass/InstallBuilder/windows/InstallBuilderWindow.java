@@ -407,6 +407,8 @@ public class InstallBuilderWindow {
 			public void run() {
 				File fi = new File(apName.getText());
 				fi.mkdir();
+				File filesDir = new File(fi.getPath() + "/Files");
+				filesDir.mkdir();
 				lblInstalling.show();
 				log.Info("Making list...");
 				content = makeConf(content);
@@ -420,19 +422,22 @@ public class InstallBuilderWindow {
 				d.copyDir(dirModel, apName, dirBar, log);
 				dirBar.hide();
 				lblInstalling.hide();
-				content += "main-executable=" + mainExe.getText();
+				if(!System.getProperty("os.name").equals("Linux"))
+					content += "main-executable=Files\\" + mainExe.getText();
+				else
+					content += "main-executable=Files\\" + mainExe.getText();
 				log.Info("Writing conf...");
 				Utils.writeFile("Conf.txt", content);
 				
 				if(!System.getProperty("os.name").equals("Linux")) {
 					log.Info("Copy File Type: Linux");
-					Utils.copyFile(new File(license.getText()), new File(apName.getText() + "/" + Utils.indexOf(license.getText(), '\\')), log);
+					Utils.copyFile(new File(license.getText()), new File(apName.getText() + "/Files/" + Utils.indexOf(license.getText(), '\\')), log);
 				}else {
 					log.Info("Copy File Type: Windows/Other");
-					Utils.copyFile(new File(license.getText()), new File(apName.getText() + "/" + Utils.indexOf(license.getText(), '/')), log);
+					Utils.copyFile(new File(license.getText()), new File(apName.getText() + "/Files/" + Utils.indexOf(license.getText(), '/')), log);
 				}
 					Utils.copyFile(new File("Conf.txt"), new File(apName.getText() + "/Conf.txt"), log);
-				Utils.copyFile(new File("Cf32.dat"), new File(apName.getText() + "/SETUP.jar"), log);
+				Utils.copyFile(new File("Cf32.dat"), new File(apName.getText() + "/SETUP.exe"), log);
 				
 				enableButtons(true);
 				content = "";
@@ -462,9 +467,9 @@ public class InstallBuilderWindow {
 		conf += "default-install-dir=C:\\Program Files\n";
 		
 		if(!System.getProperty("os.name").equals("Linux"))
-			conf += "license-path=" + Utils.indexOf(license.getText(), '\\') + "\n";
+			conf += "license-path=" + "Files\\" + Utils.indexOf(license.getText(), '\\') + "\n";
 		else
-			conf += "license-path=" + Utils.indexOf(license.getText(), '/') + "\n";
+			conf += "license-path=" + "Files/" + Utils.indexOf(license.getText(), '/') + "\n";
 		
 		conf += "install-folder-name=" + installFolderName.getText() + "\n";
 		conf += "## FILES ##" + "\n";
