@@ -12,7 +12,7 @@ public class Main {
 	public static final boolean isDebug = false;
 	
 	public static void main(String args[]) {
-		Logger log = new Logger("Latest.log");
+		Logger log = new Logger("latest.log");
 		
 		log.Info("System.getProperty(\"os.name\") == " + System.getProperty("os.name"));
 		log.Info("System.getProperty(\"os.arch\") == " + System.getProperty("os.arch"));
