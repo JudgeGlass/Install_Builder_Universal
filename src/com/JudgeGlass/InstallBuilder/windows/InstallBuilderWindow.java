@@ -37,8 +37,8 @@ import com.JudgeGlass.InstallBuilder.tools.Utils;
 public class InstallBuilderWindow {
 	
 	/** Window Dimensions */
-	private final int WIDTH = 825;
-	private final int HEIGHT = 470;
+	private final int WIDTH = 815;
+	private final int HEIGHT = 465;
 	
 	/** Components */
 	private JFrame frame;

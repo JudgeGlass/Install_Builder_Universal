@@ -23,6 +23,9 @@ public class Main {
 			log.Info("Setting UI...");
 			if(!System.getProperty("os.name").equals("Linux")) {
 				UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+				//UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+			}else if(System.getProperty("os.name").equals("Linux")){
+				UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
 			}
 			UIManager.put("Button.font", new Font(Font.SANS_SERIF, 0, 11));
 			UIManager.put("Label.font", new Font(Font.SANS_SERIF, 0, 11));

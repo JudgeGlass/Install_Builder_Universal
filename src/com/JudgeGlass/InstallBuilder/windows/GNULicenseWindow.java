@@ -21,7 +21,7 @@ public class GNULicenseWindow {
 		frame = new JFrame();
 		frame.setTitle("License");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setSize(630, 490);
+		frame.setSize(620, 480);
 		frame.setLocationRelativeTo(null);
 		frame.setLayout(null);
 		frame.setResizable(false);
