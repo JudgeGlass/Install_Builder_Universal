@@ -1,3 +1,8 @@
+Get
+---
+- Windows [Download](https://github.com/JudgeGlass/Install_Builder_Universal/releases/tag/v0.0.4)
+- Linux and MacOS [Download](https://github.com/JudgeGlass/Install_Builder_Universal/releases/)
+
 About
 -----
 This is a install wizard maker for Windows, MacOS, and Linux
