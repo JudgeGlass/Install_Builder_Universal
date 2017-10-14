@@ -22,14 +22,16 @@ public class Main {
 		try {
 			log.Info("Setting UI...");
 			if(!System.getProperty("os.name").equals("Linux")) {
-				UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-				//UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+				JOptionPane.showMessageDialog(null, "OS not supported!\nIf your on windows please get the windows version.\n"
+						+ "https://github.com/JudgeGlass/Install_Builder_Universal/releases/tag/v0.0.4", "OS not supported!", JOptionPane.ERROR_MESSAGE);
+				return;
 			}else if(System.getProperty("os.name").equals("Linux")){
 				UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
+				
+				UIManager.put("Button.font", new Font(Font.MONOSPACED, 0, 10));
+				UIManager.put("Label.font", new Font(Font.MONOSPACED, 0, 4));
+				UIManager.put("RadioButton.font", new Font(Font.MONOSPACED, 0, 10));
 			}
-			UIManager.put("Button.font", new Font(Font.SANS_SERIF, 0, 11));
-			UIManager.put("Label.font", new Font(Font.SANS_SERIF, 0, 11));
-			UIManager.put("RadioButton.font", new Font(Font.SANS_SERIF, 0, 11));
 			
 			log.Info("Starting Program...");
 			InstallBuilderWindow window = new InstallBuilderWindow("Install Builder Universal [" + version + "]", log);

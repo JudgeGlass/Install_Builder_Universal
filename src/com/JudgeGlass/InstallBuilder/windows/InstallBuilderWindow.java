@@ -1,5 +1,6 @@
 package com.JudgeGlass.InstallBuilder.windows;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -38,7 +39,7 @@ public class InstallBuilderWindow {
 	
 	/** Window Dimensions */
 	private final int WIDTH = 815;
-	private final int HEIGHT = 465;
+	private final int HEIGHT = 440;
 	
 	/** Components */
 	private JFrame frame;
@@ -109,69 +110,83 @@ public class InstallBuilderWindow {
 		addDirList();
 		
 		lblChooseFile = new JLabel("Choose Files");
+		lblChooseFile.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		lblChooseFile.setBounds(5, 20, 175, 15);
 		frame.getContentPane().add(lblChooseFile);
 		
 		lblChooseDir = new JLabel("Choose Directory");
+		lblChooseDir.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		lblChooseDir.setBounds(445, 20, 175, 15);
 		frame.getContentPane().add(lblChooseDir);
 		
 		btnFileDelete = new JButton("Delete");
+		btnFileDelete.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		btnFileDelete.setBounds(280, 240, 75, 20);
 		btnFileDelete.setActionCommand("FILE_DELETE");
 		btnFileDelete.addActionListener(new BtnListener());
 		frame.getContentPane().add(btnFileDelete);
 		
 		btnDirDelete = new JButton("Delete");
+		btnDirDelete.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		btnDirDelete.setBounds(730, 240, 75, 20);
 		btnDirDelete.setActionCommand("DIR_DELETE");
 		btnDirDelete.addActionListener(new BtnListener());
 		frame.getContentPane().add(btnDirDelete);
 		
 		btnFileBrowse = new JButton("Browse...");
+		btnFileBrowse.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		btnFileBrowse.setBounds(5, 240, 90, 20);
 		btnFileBrowse.setActionCommand("OPEN_FILE");
 		btnFileBrowse.addActionListener(new BtnListener());
 		frame.getContentPane().add(btnFileBrowse);
 		
 		btnDirBrowse = new JButton("Browse...");
+		btnDirBrowse.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		btnDirBrowse.setBounds(445, 240, 90, 20);
 		btnDirBrowse.setActionCommand("OPEN_DIR");
 		btnDirBrowse.addActionListener(new BtnListener());
 		frame.getContentPane().add(btnDirBrowse);
 		
 		mainExe = new JTextField();
+		mainExe.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		mainExe.setBounds(5, 360, 150, 20);
 		mainExe.setToolTipText("Ex: program.exe or folder/pro.exe");
 		frame.getContentPane().add(mainExe);
 		
 		license = new JTextField();
+		license.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		license.setBounds(160, 360, 150, 20);
 		frame.getContentPane().add(license);
 		
 		btnLicenseBrowse = new JButton("Browse...");
+		btnLicenseBrowse.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		btnLicenseBrowse.setBounds(315, 359, 90, 20);
 		btnLicenseBrowse.setActionCommand("OPEN_LICENSE");
 		btnLicenseBrowse.addActionListener(new BtnListener());
 		frame.getContentPane().add(btnLicenseBrowse);
 		
 		apName = new JTextField();
+		apName.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		apName.setBounds(5, 405, 150, 20);
 		frame.getContentPane().add(apName);
 		
 		apDec = new JTextField();
+		apDec.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		apDec.setBounds(160, 405, 150, 20);
 		frame.getContentPane().add(apDec);
 	
 		installFolderName = new JTextField();
+		installFolderName.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		installFolderName.setBounds(315, 405, 150, 20);
 		frame.getContentPane().add(installFolderName);
 		
 		lblMainExe = new JLabel("Main Exe File(From list)");
+		lblMainExe.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		lblMainExe.setBounds(5, 345, 300, 15);
 		frame.getContentPane().add(lblMainExe);
 		
 		lblLicense = new JLabel("License:");
+		lblLicense.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		lblLicense.setBounds(160, 345, 100, 15);
 		frame.getContentPane().add(lblLicense);
 		
@@ -180,20 +195,24 @@ public class InstallBuilderWindow {
 		frame.getContentPane().add(lblApName);
 		
 		lblApDec = new JLabel("Application Description:");
+		lblApDec.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		lblApDec.setBounds(160, 390, 200, 15);
 		frame.getContentPane().add(lblApDec);
 		
 		lblInstallFolderName = new JLabel("Install Folder Name:");
+		lblInstallFolderName.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		lblInstallFolderName.setBounds(315, 390, 300, 15);
 		frame.getContentPane().add(lblInstallFolderName);
 		
 		btnMake = new JButton("Make");
+		btnMake.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		btnMake.setBounds(718, 405, 75, 20);
 		btnMake.setActionCommand("MAKE");
 		btnMake.addActionListener(new BtnListener());
 		frame.getContentPane().add(btnMake);
 		
 		btnApplication = new JButton("Apps.");
+		btnApplication.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		btnApplication.setBounds(718, 380, 75, 20);
 		btnApplication.setActionCommand("APPLICATTIONS");
 		btnApplication.addActionListener(new BtnListener());
@@ -203,6 +222,7 @@ public class InstallBuilderWindow {
 		}
 		frame.getContentPane().add(btnApplication);
 		lblInstalling = new JLabel("Making...");
+		lblInstalling.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		lblInstalling.setBounds(475, 390, 100, 15);
 		lblInstalling.hide();
 		frame.getContentPane().add(lblInstalling);
@@ -225,6 +245,7 @@ public class InstallBuilderWindow {
 	/** Make The Menu Bar*/
 	private void menuBar() {
 		menuBar = new JMenuBar();
+		menuBar.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		menuBar.setBounds(0, 0, frame.getWidth(), 20);
 		frame.getContentPane().add(menuBar);
 		
@@ -270,6 +291,7 @@ public class InstallBuilderWindow {
 	private void addFileList() {
 		fileModel = new DefaultListModel();
 		fileList = new JList(fileModel);
+		fileList.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		JScrollPane sp = new JScrollPane(fileList);
 		sp.setBounds(5, 35, 350, 200);
 		frame.getContentPane().add(sp);
@@ -279,6 +301,7 @@ public class InstallBuilderWindow {
 	private void addDirList() {
 		dirModel = new DefaultListModel();
 		dirList = new JList(dirModel);
+		dirList.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		JScrollPane sp = new JScrollPane(dirList);
 		sp.setBounds(445, 35, 360, 200);
 		frame.getContentPane().add(sp);

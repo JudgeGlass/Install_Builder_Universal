@@ -1,5 +1,6 @@
 package com.JudgeGlass.InstallBuilder.windows;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -37,12 +38,14 @@ public class LogWindow {
 	
 	private void init() {
 		txtArea = new JTextArea();
+		txtArea.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		txtArea.setEditable(false);
 		scrollPane = new JScrollPane(txtArea);
 		scrollPane.setBounds(5, 5, 580, 400);
 		frame.getContentPane().add(scrollPane);
 		
 		btnOk = new JButton("OK");
+		btnOk.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		btnOk.setBounds(485, 410, 100, 20);
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -52,6 +55,7 @@ public class LogWindow {
 		frame.getContentPane().add(btnOk);
 		
 		btnUpdate = new JButton("Update");
+		btnUpdate.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		btnUpdate.setBounds(380, 410, 100, 20);
 		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

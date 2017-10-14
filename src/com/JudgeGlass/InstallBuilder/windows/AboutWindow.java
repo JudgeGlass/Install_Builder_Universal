@@ -3,6 +3,7 @@ package com.JudgeGlass.InstallBuilder.windows;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Desktop;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -38,7 +39,7 @@ public class AboutWindow {
 		frame = new JFrame();
 		frame.setTitle("About");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setSize(310, 285);
+		frame.setSize(310, 265);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setLayout(null);
@@ -58,7 +59,8 @@ public class AboutWindow {
 		frame.getContentPane().add(lblImage);
 		
 		lblApName = new JLabel("Install Builder Universal");
-		lblApName.setBounds(77, 10, 120, 15);
+		lblApName.setFont(new Font(Font.SANS_SERIF, 0, 12));
+		lblApName.setBounds(77, 10, 170, 15);
 		lblApName.setForeground(Color.BLUE);
 		lblApName.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -74,32 +76,39 @@ public class AboutWindow {
 		frame.getContentPane().add(lblApName);
 		
 		lblAuthor = new JLabel("Author: Hunter Wilcox");
+		lblAuthor.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		lblAuthor.setBounds(77, 35, 300, 15);
 		frame.getContentPane().add(lblAuthor);
 		
 		lblVersion = new JLabel("Version: " + Main.version + " [Build Date: 10/6/17]");
+		lblVersion.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		lblVersion.setBounds(77, 60, 300, 15);
 		frame.getContentPane().add(lblVersion);
 		
 		lblCopyright = new JLabel("Copyright (c) 2017 Hunter Wilcox");
+		lblCopyright.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		lblCopyright.setBounds(77, 85, 300, 15);
 		frame.getContentPane().add(lblCopyright);
 		
 		lblJava = new JLabel("Java Version: " + System.getProperty("java.version"));
+		lblJava.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		lblJava.setBounds(77, 108, 300, 15);
 		frame.getContentPane().add(lblJava);
 		
 		lblDec = new JLabel("Description:");
+		lblDec.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		lblDec.setBounds(5, 115, 200, 15);
 		frame.getContentPane().add(lblDec);
 		
 		txtPane = new JTextPane();
+		txtPane.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		txtPane.setEditable(false);
 		txtPane.setBounds(5, 130, 280, 90);
 		txtPane.setText("This is a program that makes a install wizard\nfor your application. It should work Linux, Window,\nand MacOS.");
 		frame.getContentPane().add(txtPane);
 		
 		btnOk = new JButton("OK");
+		btnOk.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		btnOk.setBounds(210, 225, 75, 20);
 		btnOk.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -109,6 +118,7 @@ public class AboutWindow {
 		frame.getContentPane().add(btnOk);
 		
 		btnLicense = new JButton("License");
+		btnLicense.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		btnLicense.setBounds(125, 225, 80, 20);
 		btnLicense.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
