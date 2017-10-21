@@ -1,6 +1,6 @@
 Get
 ---
-- Windows [Download](https://github.com/JudgeGlass/Install_Builder_Universal/releases/tag/v0.0.4)
+- Windows [Download](https://github.com/JudgeGlass/Install_Builder_Universal/releases/tag/v0.0.4) (Java Included in installer)
 - Linux [Download](https://github.com/JudgeGlass/Install_Builder_Universal/releases/)
 
 About
