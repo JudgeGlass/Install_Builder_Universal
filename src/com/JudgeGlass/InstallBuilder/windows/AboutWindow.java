@@ -39,7 +39,7 @@ public class AboutWindow {
 		frame = new JFrame();
 		frame.setTitle("About");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setSize(325, 275);
+		frame.setSize(325, 280);
 		frame.setLocationRelativeTo(null);
 		frame.setResizable(false);
 		frame.setLayout(null);

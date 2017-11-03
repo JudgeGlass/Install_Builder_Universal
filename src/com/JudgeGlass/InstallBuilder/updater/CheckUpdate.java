@@ -5,9 +5,13 @@ import com.JudgeGlass.InstallBuilder.tools.Logger;
 import com.JudgeGlass.InstallBuilder.tools.Utils;
 
 public class CheckUpdate {
+	public static boolean updateAvailable = false;
+	
 	public CheckUpdate(Logger log) {
+		log.Info("Contacting the server...");
 		log.Info("Checking for update...");
 		if(!getWebVersion().equals(Main.versionUrl)) {
+			updateAvailable = true;
 			log.Info("Getting update...");
 			Downloader d = new Downloader();
 			try {
@@ -19,6 +23,7 @@ public class CheckUpdate {
 			}
 		}else {
 			log.Info("No Update Found");
+			updateAvailable = false;
 		}
 	}
 

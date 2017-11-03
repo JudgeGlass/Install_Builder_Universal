@@ -14,10 +14,11 @@ import com.JudgeGlass.InstallBuilder.windows.InstallBuilderWindow;
 import com.JudgeGlass.Tools.Download.DownloadFile;
 
 public class Main {
-	public static final String versionUrl = "https://github.com/JudgeGlass/Install_Builder_Universal/releases/download/v0.0.5/InstallBuilder_v0.0.5.zip";
-	public static final String version = "v0.0.5";
-	public static final String buildDate = "10/19/17";
-	public static final boolean isDebug = false;
+	public static final String versionUrl = "https://github.com/JudgeGlass/Install_Builder_Universal/releases/download/v0.0.5.1/InstallBuilder_v0.0.5.1.zip";
+	public static final String version = "v0.0.5.2";
+	public static final String buildDate = "10/25/17";
+	public static final boolean isDebug = true;
+	public static final boolean runUpdate = !isDebug;
 	
 	public static void main(String args[]) {
 		
@@ -45,10 +46,14 @@ public class Main {
 			}
 			
 			
-			try {
-				DownloadFile getVersionData = new DownloadFile("version.dat", "https://github.com/JudgeGlass/Install_Builder_Universal/releases/download/v0.0.4/version.dat");
-			} catch (IOException e1) {
-				e1.printStackTrace();
+			if(runUpdate && !System.getProperty("os.name").equals("Linux")) {
+				try {
+					DownloadFile getVersionData = new DownloadFile("version.dat", "https://github.com/JudgeGlass/Install_Builder_Universal/releases/download/v0.0.4/version.dat");
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}else {
+				log.Info("Updater is disabled");
 			}
 			
 			log.Info("Starting Program...");
@@ -60,8 +65,10 @@ public class Main {
 						"Debug Warning", JOptionPane.WARNING_MESSAGE);
 			}
 			
-			CheckUpdate update = new CheckUpdate(log);
-			new File("version.dat").delete();
+			if(runUpdate && !System.getProperty("os.name").equals("Linux")) {
+				CheckUpdate update = new CheckUpdate(log);
+				new File("version.dat").delete();
+			}
 		} catch (Exception e) {
 			JOptionPane.showMessageDialog(null, "Error:\n" + e);
 			e.printStackTrace();

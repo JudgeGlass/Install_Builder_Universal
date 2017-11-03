@@ -26,6 +26,7 @@ import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import com.JudgeGlass.InstallBuilder.Main;
 import com.JudgeGlass.InstallBuilder.listeners.MenuActionListener;
 import com.JudgeGlass.InstallBuilder.tools.Logger;
 import com.JudgeGlass.InstallBuilder.tools.ManageDirs;
@@ -287,10 +288,17 @@ public class InstallBuilderWindow {
 		
 		JMenuItem update = new JMenuItem("Check for update");
 		
+		if(!Main.runUpdate)
+			update.setEnabled(false);
+			
+		
 		update.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				CheckUpdate checkUpdate = new CheckUpdate(log);
 				new File("version.dat").delete();
+				if(!CheckUpdate.updateAvailable) {
+					JOptionPane.showMessageDialog(null, "InstallBuilder " + Main.version + " is the latest.", "No Update", JOptionPane.INFORMATION_MESSAGE);
+				}
 			}
 		});
 		
