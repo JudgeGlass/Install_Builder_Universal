@@ -9,21 +9,36 @@ import javax.swing.UIManager;
 
 import com.JudgeGlass.InstallBuilder.tools.Logger;
 import com.JudgeGlass.InstallBuilder.updater.CheckUpdate;
-import com.JudgeGlass.InstallBuilder.windows.ExtractWindow;
 import com.JudgeGlass.InstallBuilder.windows.InstallBuilderWindow;
 import com.JudgeGlass.Tools.Download.DownloadFile;
 
 public class Main {
-	public static final String versionUrl = "https://github.com/JudgeGlass/Install_Builder_Universal/releases/download/v0.0.5.1/InstallBuilder_v0.0.5.1.zip";
-	public static final String version = "v0.0.5.2";
-	public static final String buildDate = "10/25/17";
-	public static final boolean isDebug = true;
-	public static final boolean runUpdate = !isDebug;
 	
 	public static void main(String args[]) {
-		
+		/** TEST */
+		/*try {
+			URL url = new URL("https://raw.githubusercontent.com/JudgeGlass/OpenGL-Test/master/OpenGL/Logger.cpp");
+			InputStream in = url.openStream();
+			StringWriter w = new StringWriter();
+			IOUtils.copy(in, w, "UTF-8");
+			JOptionPane.showMessageDialog(null, w.toString());
+		} catch (MalformedURLException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
 		
 		Logger log = new Logger("latest.log");
+
+		log.Custom(" ###############################################", "About", false);
+		log.Custom(" # Install Builder by Hunter Wilcox", "About", false);
+		log.Custom(" # Required Java Runtime Version: 1.8.x (Java 8)", "About", false);
+		log.Custom(" # License: GNU General Public License v3.0", "About", false);
+		log.Custom(" # Version: " + ApplicationInfo.VERSION, "About", false);
+		log.Custom(" # Build date: " + ApplicationInfo.BUILD_DATE, "About", false);
+		log.Custom(" ###############################################\n", "About", false);
 		
 		log.Info("System.getProperty(\"os.name\") == " + System.getProperty("os.name"));
 		log.Info("System.getProperty(\"os.version\") == " + System.getProperty("os.version"));
@@ -31,12 +46,17 @@ public class Main {
 		log.Info("System.getProperty(\"java.home\") == " + System.getProperty("java.home"));
 		log.Info("System.getProperty(\"java.version\") == " + System.getProperty("java.version"));
 		
+		if(!new File("Cf32.dat").exists()) {
+			log.Error("Cf32.dat is missing. Please reinstall to fix the problem");
+			JOptionPane.showMessageDialog(null, "Could not find \"Cf32.dat\".\nThis is required for this application to run.\n", "Error: Missing File", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
 		try {
 			log.Info("Setting UI...");
 			if(!System.getProperty("os.name").equals("Linux")) {
-				log.Error("OS is not supported for InstallBuilder Universal " + version);
+				log.Error("OS is not supported for InstallBuilder Universal " + ApplicationInfo.VERSION);
 				UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-				
 			}else if(System.getProperty("os.name").equals("Linux")){
 				UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
 				
@@ -46,8 +66,9 @@ public class Main {
 			}
 			
 			
-			if(runUpdate && !System.getProperty("os.name").equals("Linux")) {
+			if(ApplicationInfo.runUpdate && !System.getProperty("os.name").equals("Linux")) {
 				try {
+					log.Info("Fetching: https://github.com/JudgeGlass/Install_Builder_Universal/releases/download/v0.0.4/version.dat");
 					DownloadFile getVersionData = new DownloadFile("version.dat", "https://github.com/JudgeGlass/Install_Builder_Universal/releases/download/v0.0.4/version.dat");
 				} catch (IOException e1) {
 					e1.printStackTrace();
@@ -57,22 +78,23 @@ public class Main {
 			}
 			
 			log.Info("Starting Program...");
-			InstallBuilderWindow window = new InstallBuilderWindow("Install Builder Universal [" + version + "]", log);
+			InstallBuilderWindow window = new InstallBuilderWindow("Install Builder Universal [" + ApplicationInfo.VERSION + "]", log);
 			window.setVisable(true);
 			
-			if(Main.isDebug) {
-				JOptionPane.showMessageDialog(null, "This is a Install builder " + Main.version + " DEBUG.\nPlease accecpt bugs.",
+			if(ApplicationInfo.isDebug) {
+				log.Warning("This is a debug version of install builder!");
+				JOptionPane.showMessageDialog(null, "This is a Install builder " + ApplicationInfo.VERSION + " DEBUG.\nPlease accecpt bugs.",
 						"Debug Warning", JOptionPane.WARNING_MESSAGE);
 			}
 			
-			if(runUpdate && !System.getProperty("os.name").equals("Linux")) {
+			if(ApplicationInfo.runUpdate && !System.getProperty("os.name").equals("Linux")) {
 				CheckUpdate update = new CheckUpdate(log);
 				new File("version.dat").delete();
 			}
 		} catch (Exception e) {
-			JOptionPane.showMessageDialog(null, "Error:\n" + e);
 			e.printStackTrace();
-			log.Error("Could not load UI: " + e.getMessage());
+			log.Error("Crash: " + e);
+			JOptionPane.showMessageDialog(null, "Error:\n" + e, "Crash!", JOptionPane.ERROR_MESSAGE);
 			return;
 		} 
 	}

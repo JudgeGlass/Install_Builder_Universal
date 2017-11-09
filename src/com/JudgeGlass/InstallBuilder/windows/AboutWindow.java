@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
+import com.JudgeGlass.InstallBuilder.ApplicationInfo;
 import com.JudgeGlass.InstallBuilder.Main;
 
 public class AboutWindow {
@@ -80,7 +81,7 @@ public class AboutWindow {
 		lblAuthor.setBounds(77, 35, 300, 15);
 		frame.getContentPane().add(lblAuthor);
 		
-		lblVersion = new JLabel("Version: " + Main.version + " [Build Date: " + Main.buildDate + "]");
+		lblVersion = new JLabel("Version: " + ApplicationInfo.VERSION + " [Build Date: " + ApplicationInfo.BUILD_DATE + "]");
 		lblVersion.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		lblVersion.setBounds(77, 60, 300, 15);
 		frame.getContentPane().add(lblVersion);

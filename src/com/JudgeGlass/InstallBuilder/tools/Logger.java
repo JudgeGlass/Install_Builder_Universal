@@ -74,8 +74,10 @@ public class Logger {
 	public void Custom(String message, String type, boolean includeDate) {
 		date = new Date();
 		if(includeDate) {
+			System.out.println(String.format("[%s: %s] %s\n", type, dateFormat.format(date), message));
 			MainLog += String.format("[%s: %s] %s\n", type, dateFormat.format(date), message);
 		}else {
+			System.out.println(String.format("[%s] %s", type, message));
 			MainLog += String.format("[%s] %s\n", type, message);
 		}
 		try {

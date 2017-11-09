@@ -14,6 +14,7 @@ import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -25,8 +26,12 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.metal.MetalLookAndFeel;
 
-import com.JudgeGlass.InstallBuilder.Main;
+import com.JudgeGlass.InstallBuilder.ApplicationInfo;
 import com.JudgeGlass.InstallBuilder.listeners.MenuActionListener;
 import com.JudgeGlass.InstallBuilder.tools.Logger;
 import com.JudgeGlass.InstallBuilder.tools.ManageDirs;
@@ -51,6 +56,7 @@ public class InstallBuilderWindow {
 	private JMenuBar menuBar;
 	private JMenu fileMenu;
 	private JMenu helpMenu;
+	private JMenu styleMenu;
 	private JLabel lblChooseFile;
 	private JLabel lblChooseDir;
 	private JList fileList;
@@ -88,6 +94,7 @@ public class InstallBuilderWindow {
 	
 	/** Makes The Window */
 	public InstallBuilderWindow(final String title, final Logger log) {
+		
 		this.log = log;
 		frame = new JFrame();
 		frame.setTitle(title);
@@ -102,6 +109,7 @@ public class InstallBuilderWindow {
 		
 		log.Info("Initializing Components...");
 		initialize();
+		log.Info("Initialized components successfully!");
 	}
 	
 	/** Adds The Components*/
@@ -260,6 +268,9 @@ public class InstallBuilderWindow {
 		exitFile.setActionCommand("EXIT");
 		exitFile.addActionListener(new MenuActionListener());
 		
+		styleMenu = new JMenu("Style");
+		menuBar.add(styleMenu);
+		
 		helpMenu = new JMenu("Help");
 		menuBar.add(helpMenu);
 		
@@ -288,19 +299,86 @@ public class InstallBuilderWindow {
 		
 		JMenuItem update = new JMenuItem("Check for update");
 		
-		if(!Main.runUpdate)
+		if(!ApplicationInfo.runUpdate)
 			update.setEnabled(false);
 			
 		
 		update.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CheckUpdate checkUpdate = new CheckUpdate(log);
+				new CheckUpdate(log);
 				new File("version.dat").delete();
 				if(!CheckUpdate.updateAvailable) {
-					JOptionPane.showMessageDialog(null, "InstallBuilder " + Main.version + " is the latest.", "No Update", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "InstallBuilder " + ApplicationInfo.VERSION + " is the latest.", "No Update", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
+		
+		JCheckBoxMenuItem  normalTheme = new JCheckBoxMenuItem ("System Theme");
+		JCheckBoxMenuItem javaTheme = new JCheckBoxMenuItem("Metal Theme");
+		normalTheme.setSelected(true);
+		
+		normalTheme.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				boolean isChecked;
+				if(normalTheme.isSelected()) {
+					
+			        try {
+						UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+						javaTheme.setSelected(false);
+					} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+							| UnsupportedLookAndFeelException e1) {
+						e1.printStackTrace();
+					}
+			       
+			        SwingUtilities.updateComponentTreeUI(frame);
+				}else {
+					try {
+						UIManager.setLookAndFeel(new MetalLookAndFeel());
+						javaTheme.setSelected(true);
+					} catch (UnsupportedLookAndFeelException e1) {
+						e1.printStackTrace();
+					}
+			       
+			        SwingUtilities.updateComponentTreeUI(frame);
+				}
+			}
+		});
+		
+		javaTheme.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(normalTheme.isSelected()) {
+					
+			        try {
+			        	UIManager.setLookAndFeel(new MetalLookAndFeel());
+			        	normalTheme.setSelected(false);
+					} catch (UnsupportedLookAndFeelException e1) {
+						e1.printStackTrace();
+					}
+			       
+			        SwingUtilities.updateComponentTreeUI(frame);
+				}else {
+					try {
+						try {
+							UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+						} catch (ClassNotFoundException | InstantiationException | IllegalAccessException e1) {
+							e1.printStackTrace();
+						}
+						normalTheme.setSelected(true);
+					} catch (UnsupportedLookAndFeelException e1) {
+						e1.printStackTrace();
+					}
+			       
+			        SwingUtilities.updateComponentTreeUI(frame);
+				}
+			}
+			
+		});
+		
+		
+		
+		
+		styleMenu.add(normalTheme);
+		styleMenu.add(javaTheme);
 		
 		fileMenu.add(openConf);
 		fileMenu.add(saveConf);
@@ -447,7 +525,7 @@ public class InstallBuilderWindow {
 	 * Makes the application
 	 */
 	private void make() {
-		log.Custom("Starting Thread", "DEBUG", true);
+		log.Info("Starting process thread...");
 		new Thread(new Runnable() {
 			@SuppressWarnings("deprecation")
 			public void run() {
@@ -492,6 +570,7 @@ public class InstallBuilderWindow {
 				log.Info("Setup is complete");
 			}
 		}).start();
+		log.Info("Process thread started successfully!");
 	}
 	
 	/**
