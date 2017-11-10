@@ -46,7 +46,7 @@ public class Main {
 		log.Info("System.getProperty(\"java.home\") == " + System.getProperty("java.home"));
 		log.Info("System.getProperty(\"java.version\") == " + System.getProperty("java.version"));
 		
-		if(!new File("Cf32.dat").exists()) {
+		if(!new File(System.getProperty("user.dir") + "/Cf32.dat").exists()) {
 			log.Error("Cf32.dat is missing. Please reinstall to fix the problem");
 			JOptionPane.showMessageDialog(null, "Could not find \"Cf32.dat\".\nThis is required for this application to run.\n", "Error: Missing File", JOptionPane.ERROR_MESSAGE);
 			return;
@@ -54,16 +54,12 @@ public class Main {
 		
 		try {
 			log.Info("Setting UI...");
-			if(!System.getProperty("os.name").equals("Linux")) {
-				log.Error("OS is not supported for InstallBuilder Universal " + ApplicationInfo.VERSION);
-				UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-			}else if(System.getProperty("os.name").equals("Linux")){
-				UIManager.setLookAndFeel("com.sun.java.swing.plaf.gtk.GTKLookAndFeel");
-				
-				UIManager.put("Button.font", new Font(Font.MONOSPACED, 0, 10));
-				UIManager.put("Label.font", new Font(Font.MONOSPACED, 0, 4));
-				UIManager.put("RadioButton.font", new Font(Font.MONOSPACED, 0, 10));
-			}
+			
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+			//UIManager.put("Button.font", new Font(Font.MONOSPACED, 0, 10));
+			//UIManager.put("Label.font", new Font(Font.MONOSPACED, 0, 4));
+			//UIManager.put("RadioButton.font", new Font(Font.MONOSPACED, 0, 10));
+			
 			
 			
 			if(ApplicationInfo.runUpdate && !System.getProperty("os.name").equals("Linux")) {
