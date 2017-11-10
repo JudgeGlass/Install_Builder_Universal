@@ -374,9 +374,6 @@ public class InstallBuilderWindow {
 			
 		});
 		
-		
-		
-		
 		styleMenu.add(normalTheme);
 		styleMenu.add(javaTheme);
 		
@@ -583,7 +580,6 @@ public class InstallBuilderWindow {
 		btnDirBrowse.setEnabled(enable);
 		btnLicenseBrowse.setEnabled(enable);
 		btnMake.setEnabled(enable);
-		
 	}
 	
 	private String makeConf(String conf) {
@@ -628,7 +624,6 @@ public class InstallBuilderWindow {
 			lines.add("\n## DIRS END ##");
 		}
 		
-		
 		SaveFile saveFile = new SaveFile();
 		saveFile.save(panel);
 		String dir = saveFile.getDir();
@@ -649,7 +644,6 @@ public class InstallBuilderWindow {
 			e.printStackTrace();
 			log.Error("Could not save: " + e.getMessage());
 		}
-		
 	}
 	
 	/**
