@@ -19,7 +19,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 
 import com.JudgeGlass.InstallBuilder.ApplicationInfo;
-import com.JudgeGlass.InstallBuilder.Main;
 
 public class AboutWindow {
 	

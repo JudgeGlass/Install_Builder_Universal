@@ -120,12 +120,12 @@ public class InstallBuilderWindow {
 		addFileList();
 		addDirList();
 		
-		lblChooseFile = new JLabel("Choose Files");
+		lblChooseFile = new JLabel("Files");
 		lblChooseFile.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		lblChooseFile.setBounds(5, 20, 175, 15);
 		frame.getContentPane().add(lblChooseFile);
 		
-		lblChooseDir = new JLabel("Choose Directory");
+		lblChooseDir = new JLabel("Directories");
 		lblChooseDir.setFont(new Font(Font.SANS_SERIF, 0, 12));
 		lblChooseDir.setBounds(445, 20, 175, 15);
 		frame.getContentPane().add(lblChooseDir);
@@ -373,6 +373,9 @@ public class InstallBuilderWindow {
 			}
 			
 		});
+		
+		
+		
 		
 		styleMenu.add(normalTheme);
 		styleMenu.add(javaTheme);
@@ -644,6 +647,7 @@ public class InstallBuilderWindow {
 			e.printStackTrace();
 			log.Error("Could not save: " + e.getMessage());
 		}
+		
 	}
 	
 	/**
