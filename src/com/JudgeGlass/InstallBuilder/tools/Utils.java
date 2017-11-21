@@ -40,6 +40,17 @@ public class Utils {
 		return cont;
 	}
 	
+	public String readInfo(){
+		String cont = "";
+		InputStream input = getClass().getResourceAsStream("/com/JudgeGlass/InstallBuilder/resources/Info");
+		try {
+			cont = IOUtils.toString(input, "UTF-8");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return cont;
+	}
+	
 	public static String readLine(String fileName, int lineNumber) {
 		String line;
 		try {

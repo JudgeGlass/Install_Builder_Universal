@@ -1,12 +1,13 @@
 
 package com.JudgeGlass.InstallBuilder;
-import java.awt.Font;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
+import com.JudgeGlass.InstallBuilder.tools.Crypto;
 import com.JudgeGlass.InstallBuilder.tools.Logger;
 import com.JudgeGlass.InstallBuilder.updater.CheckUpdate;
 import com.JudgeGlass.InstallBuilder.windows.InstallBuilderWindow;
@@ -15,23 +16,7 @@ import com.JudgeGlass.Tools.Download.DownloadFile;
 public class Main {
 	
 	public static void main(String args[]) {
-		/** TEST */
-		/*try {
-			URL url = new URL("https://raw.githubusercontent.com/JudgeGlass/OpenGL-Test/master/OpenGL/Logger.cpp");
-			InputStream in = url.openStream();
-			StringWriter w = new StringWriter();
-			IOUtils.copy(in, w, "UTF-8");
-			JOptionPane.showMessageDialog(null, w.toString());
-		} catch (MalformedURLException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
-		
 		Logger log = new Logger("latest.log");
-
 		log.Custom(" ###############################################", "About", false);
 		log.Custom(" # Install Builder by Hunter Wilcox", "About", false);
 		log.Custom(" # Required Java Runtime Version: 1.8.x (Java 8)", "About", false);
@@ -46,26 +31,14 @@ public class Main {
 		log.Info("System.getProperty(\"java.home\") == " + System.getProperty("java.home"));
 		log.Info("System.getProperty(\"java.version\") == " + System.getProperty("java.version"));
 		
-		if(!new File(System.getProperty("user.dir") + "/Cf32.dat").exists()) {
-			log.Error("Cf32.dat is missing. Please reinstall to fix the problem");
-			JOptionPane.showMessageDialog(null, "Could not find \"Cf32.dat\".\nThis is required for this application to run.\n", "Error: Missing File", JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-		
 		try {
 			log.Info("Setting UI...");
 			
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-			//UIManager.put("Button.font", new Font(Font.MONOSPACED, 0, 10));
-			//UIManager.put("Label.font", new Font(Font.MONOSPACED, 0, 4));
-			//UIManager.put("RadioButton.font", new Font(Font.MONOSPACED, 0, 10));
-			
-			
-			
-			if(ApplicationInfo.runUpdate && !System.getProperty("os.name").equals("Linux")) {
+			if(ApplicationInfo.runUpdate) {
 				try {
-					log.Info("Fetching: https://github.com/JudgeGlass/Install_Builder_Universal/releases/download/v0.0.4/version.dat");
-					DownloadFile getVersionData = new DownloadFile("version.dat", "https://github.com/JudgeGlass/Install_Builder_Universal/releases/download/v0.0.4/version.dat");
+					log.Info("Fetching Hash: E+D0FsJXcGskuSQWALAGgmVWjuVse/gTtPaJq27pwpNqEBPtgA+1w1DVxR+Af/IGgWPS9/D+PtW69Vx2zTuJN08mM7WFcyDX4DhK65YRpM77jx9m6Epu3rM4wCLnm9Eg");
+					DownloadFile getVersionData = new DownloadFile("version.dat", "https://github.com/JudgeGlass/Install_Builder_Universal/releases/download/v0.0.4/test.dat");
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -83,9 +56,8 @@ public class Main {
 						"Debug Warning", JOptionPane.WARNING_MESSAGE);
 			}
 			
-			if(ApplicationInfo.runUpdate && !System.getProperty("os.name").equals("Linux")) {
+			if(ApplicationInfo.runUpdate) {
 				CheckUpdate update = new CheckUpdate(log);
-				new File("version.dat").delete();
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

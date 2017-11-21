@@ -306,7 +306,6 @@ public class InstallBuilderWindow {
 		update.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				new CheckUpdate(log);
-				new File("version.dat").delete();
 				if(!CheckUpdate.updateAvailable) {
 					JOptionPane.showMessageDialog(null, "InstallBuilder " + ApplicationInfo.VERSION + " is the latest.", "No Update", JOptionPane.INFORMATION_MESSAGE);
 				}
@@ -556,12 +555,14 @@ public class InstallBuilderWindow {
 				if(!System.getProperty("os.name").equals("Linux")) {
 					log.Info("Copy File Type: Linux");
 					Utils.copyFile(new File(license.getText()), new File(apName.getText() + "/Files/" + Utils.indexOf(license.getText(), '\\')), log);
+					Utils.copyFile(new File("Cf32W.dat"), new File(apName.getText() + "/SETUP.exe"), log);
 				}else {
 					log.Info("Copy File Type: Windows/Other");
 					Utils.copyFile(new File(license.getText()), new File(apName.getText() + "/Files/" + Utils.indexOf(license.getText(), '/')), log);
+					Utils.copyFile(new File("Cf32L.dat"), new File(apName.getText() + "/SETUP.jar"), log);
 				}
 					Utils.copyFile(new File("Conf.txt"), new File(apName.getText() + "/Conf.txt"), log);
-				Utils.copyFile(new File("Cf32.dat"), new File(apName.getText() + "/SETUP.exe"), log);
+				
 				
 				enableButtons(true);
 				content = "";
